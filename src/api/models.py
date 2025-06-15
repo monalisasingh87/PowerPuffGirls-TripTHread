@@ -40,3 +40,8 @@ class Post(db.Model):
             "created_at": self.created_at.isoformat(),
             "user_id": self.user_id
         }
+    def __init__(self, data): 
+        self.title = data.get("title")
+        self.content = data.get("content")
+        self.user_id = data.get("user_id")
+        
