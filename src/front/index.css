@@ -51,3 +51,11 @@
 .search-part {
   display: flex;
 }
+.sampleImage {
+  width: 300px;
+  height: 400px;
+}
+.sampleImage img {
+  width: 300px;
+  height: 400px;
+}

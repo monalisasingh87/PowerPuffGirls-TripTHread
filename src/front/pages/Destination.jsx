@@ -17,12 +17,23 @@ export const Destination = () => {
             <div className="search-bar-container">
 
                 <SearchBar setLocation={setLocation} />
-                <div>
-                    <div className="locationTitleAndImg">
-                        {location ? (<h1>location.title</h1>) : (<p>Search a place above</p>)}
+
+            </div>
+            <div className="row mt-4">
+                <div className="col-2"></div>
+                <div className="locationTitleAndImg col-8">
+                    <div className="description-header d-flex justify-content-around">
+                        <div className="title">
+                            {location ? (<h1>{location.title}</h1>) : (<p>Search a place above</p>)}
+                        </div>
+                        <div className="sampleImage">
+                            {location ? <img src={location.originalimage.source} alt="samplePiture" /> : <p>image cannot open</p>}
+                        </div>
                     </div>
                 </div>
+                <div className="col-2"></div>
             </div>
+
         </div>
     )
 }

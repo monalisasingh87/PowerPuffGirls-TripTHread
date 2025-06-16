@@ -14,7 +14,7 @@ export const SearchBar = ({ setLocation }) => {
             }
             const data = await response.json();
 
-            const validPlaceKeyWords = ['city', 'mountain', 'country', 'river', 'lake'];
+            const validPlaceKeyWords = ['city', 'mountain', 'country', 'river', 'lake', 'capital'];
             const isValid = validPlaceKeyWords.some(keyword => data.description.toLowerCase().includes(keyword));
             if ((data.type === "Internal error") || (data.status === 404) || (!isValid)) {
                 throw new Error("Something went wrong. Please enter a valid place.");
@@ -30,11 +30,6 @@ export const SearchBar = ({ setLocation }) => {
     }
 
 
-    const handleChange = (e) => {
-        const value = e.target.value;
-        setInputValue(value);
-
-    }
     return (
         <div className="search-part">
             <div className="input-wrapper">
@@ -53,7 +48,7 @@ export const SearchBar = ({ setLocation }) => {
 
             <button
                 className="btn btn-secondary search-button"
-                onClick={handleChange}
+                onClick={fetch_location}
             >Search</button>
         </div>
     )
