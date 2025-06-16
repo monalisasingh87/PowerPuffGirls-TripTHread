@@ -1,52 +1,28 @@
 import React, { useEffect, useState } from "react"
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import { Link } from "react-router-dom";
+import { SearchBar } from "../components/SearchBar.jsx"
 
 
 
 
 
 export const Destination = () => {
+    const [location, setLocation] = useState(null)
 
- const initial_city = {
-    "title": "",
-    "extract": "",
-    "timestamp": ""
-
- }
-
-
- useEffect(() => {
-     if (!location) return;
-  const fetch_location = async() => {
-   
-    const url = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(location)}`;
-    try {
-        const response = await fetch(url);
-        // const data = await response.json();
-        if(!response.ok) {
-            throw new Error("Something is wrong fetching url to get info");
-        }
-           const data = await response.json();
-           
-    } catch (error) {
-        
-    }
-
-  }
-
- },[])
 
 
     return (
-        <>
-            {/* <Input
-                placeholder="type a city or landermarks you interested"
-                type="text"
-                value=""
-            /> */}
-            {/* <button onclick={direct_to_detination}>Go</button> */}
-            show the cities..
+        <div className="destination">
+            <div className="search-bar-container">
 
-        </>
+                <SearchBar setLocation={setLocation} />
+                <div>
+                    <div className="locationTitleAndImg">
+                        {location ? (<h1>location.title</h1>) : (<p>Search a place above</p>)}
+                    </div>
+                </div>
+            </div>
+        </div>
     )
 }
