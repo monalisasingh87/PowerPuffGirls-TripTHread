@@ -24,7 +24,8 @@ export const Destination = () => {
                 <div className="locationTitleAndImg col-8">
                     <div className="description-header d-flex justify-content-around">
                         <div className="title">
-                            {location ? (<h1>{location.title}</h1>) : (<p>Search a place above</p>)}
+                            {location ? (<h1>{location.title}</h1>) : (<h1>Search a place above</h1>)}
+                            {location ? (<p>{location.extract}</p>) : (<p>The description is loading...</p>)}
                         </div>
                         <div className="sampleImage">
                             {location ? <img src={location.originalimage.source} alt="samplePiture" /> : <p>image cannot open</p>}
