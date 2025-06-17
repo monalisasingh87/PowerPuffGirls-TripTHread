@@ -29,7 +29,6 @@ class Post(db.Model):
     created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
     user_id: Mapped[int] = mapped_column(ForeignKey("user.id"), nullable=False)
 
-    # Link back to the user
     user: Mapped["User"] = relationship("User", back_populates="posts")
 
     def serialize(self):
@@ -40,8 +39,15 @@ class Post(db.Model):
             "created_at": self.created_at.isoformat(),
             "user_id": self.user_id
         }
-    def __init__(self, data): 
-        self.title = data.get("title")
-        self.content = data.get("content")
-        self.user_id = data.get("user_id")
-        
+    def __init__(self, data=None, user=None):
+        if data:
+            self.title = data.get("title")
+            self.content = data.get("content")
+        else:
+            self.title = None
+            self.content = None
+
+        if user:
+            self.user = user  # ✅ SQLAlchemy sets `user_id` from this
+        elif data and data.get("user_id"):
+            self.user_id = data.get("user_id")

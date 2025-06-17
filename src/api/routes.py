@@ -20,13 +20,17 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
-
 @api.route('/post', methods=['POST'])
 def handle_post_a_journal():
     body = request.get_json()
-    post = Post(body)
+
+    user_id = body.get("user_id")
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    post = Post(data=body, user=user)  # ✅ pass the User object
     db.session.add(post)
     db.session.commit()
 
-    return jsonify("journal created"), 200
-
+    return jsonify(post.serialize()), 201
