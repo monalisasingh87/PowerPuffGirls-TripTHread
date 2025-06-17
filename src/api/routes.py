@@ -20,17 +20,30 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
-@api.route('/post', methods=['POST'])
-def handle_post_a_journal():
-    body = request.get_json()
+@api.route('/user', methods=['POST'])
+def create_user():
+    data = request.get_json()
 
-    user_id = body.get("user_id")
-    user = User.query.get(user_id)
-    if not user:
-        return jsonify({"error": "User not found"}), 404
+    username = data.get("username")
+    email = data.get("email")
+    password = data.get("password")  # Note: hash this in production
 
-    post = Post(data=body, user=user)  # ✅ pass the User object
-    db.session.add(post)
+    if not username or not email or not password:
+        return jsonify({"error": "Missing fields"}), 400
+
+    # Check if username or email already exists
+    if User.query.filter_by(username=username).first():
+        return jsonify({"error": "Username already exists"}), 409
+    if User.query.filter_by(email=email).first():
+        return jsonify({"error": "Email already exists"}), 409
+
+    user = User(
+        username=username,
+        email=email,
+        password=password,
+        is_active=True
+    )
+    db.session.add(user)
     db.session.commit()
 
-    return jsonify(post.serialize()), 201
+    return jsonify(user.serialize()), 201

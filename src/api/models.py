@@ -7,6 +7,7 @@ db = SQLAlchemy()
 
 class User(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
+    username: Mapped[str] = mapped_column(String(120), unique=True, nullable=False )
     email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False)
@@ -30,6 +31,7 @@ class Post(db.Model):
     user_id: Mapped[int] = mapped_column(ForeignKey("user.id"), nullable=False)
 
     user: Mapped["User"] = relationship("User", back_populates="posts")
+    images: Mapped[list["PostImage"]] = relationship("PostImage", back_populates="post", cascade="all, delete-orphan")
 
     def serialize(self):
         return {
@@ -37,8 +39,10 @@ class Post(db.Model):
             "title": self.title,
             "content": self.content,
             "created_at": self.created_at.isoformat(),
-            "user_id": self.user_id
+            "user_id": self.user_id,
+            "images": [img.serialize() for img in self.images]
         }
+
     def __init__(self, data=None, user=None):
         if data:
             self.title = data.get("title")
@@ -48,6 +52,21 @@ class Post(db.Model):
             self.content = None
 
         if user:
-            self.user = user  # ✅ SQLAlchemy sets `user_id` from this
+            self.user = user  
         elif data and data.get("user_id"):
             self.user_id = data.get("user_id")
+
+class PostImage(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    image_url: Mapped[str] = mapped_column(nullable=False)
+    post_id: Mapped[int] = mapped_column(ForeignKey("post.id"), nullable=False)
+
+    # Relationship back to Post
+    post: Mapped["Post"] = relationship("Post", back_populates="images")
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "image_url": self.image_url,
+            "post_id": self.post_id
+        }
