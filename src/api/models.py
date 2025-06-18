@@ -5,16 +5,17 @@ from datetime import datetime
 
 db = SQLAlchemy()
 
+
 class User(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
-    username: Mapped[str] = mapped_column(String(120), unique=True, nullable=False )
-    email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
+    username: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
+    email: Mapped[str] = mapped_column(String(120), unique=True, nullable=True)
     password: Mapped[str] = mapped_column(nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False)
 
     # Add relationship to posts
-    posts: Mapped[list["Post"]] = relationship("Post", back_populates="user", cascade="all, delete-orphan")
-
+    posts: Mapped[list["Post"]] = relationship(
+        "Post", back_populates="user", cascade="all, delete-orphan")
 
     def serialize(self):
         return {
@@ -22,7 +23,8 @@ class User(db.Model):
             "email": self.email,
             # do not serialize the password, its a security breach
         }
-    
+
+
 class Post(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str] = mapped_column(String(150), nullable=False)
@@ -31,7 +33,8 @@ class Post(db.Model):
     user_id: Mapped[int] = mapped_column(ForeignKey("user.id"), nullable=False)
 
     user: Mapped["User"] = relationship("User", back_populates="posts")
-    images: Mapped[list["PostImage"]] = relationship("PostImage", back_populates="post", cascade="all, delete-orphan")
+    images: Mapped[list["PostImage"]] = relationship(
+        "PostImage", back_populates="post", cascade="all, delete-orphan")
 
     def serialize(self):
         return {
@@ -39,7 +42,10 @@ class Post(db.Model):
             "title": self.title,
             "content": self.content,
             "created_at": self.created_at.isoformat(),
-            "user_id": self.user_id,
+            "user": {
+                "id": self.user.id,
+                "username": self.user.username,
+            },
             "images": [img.serialize() for img in self.images]
         }
 
@@ -52,9 +58,10 @@ class Post(db.Model):
             self.content = None
 
         if user:
-            self.user = user  
+            self.user = user
         elif data and data.get("user_id"):
             self.user_id = data.get("user_id")
+
 
 class PostImage(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
