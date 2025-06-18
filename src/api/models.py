@@ -27,6 +27,7 @@ class User(db.Model):
 
 class Post(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
+    username: Mapped[str] = mapped_column(String(150), nullable=False)
     title: Mapped[str] = mapped_column(String(150), nullable=False)
     content: Mapped[str] = mapped_column(nullable=False)
     created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
