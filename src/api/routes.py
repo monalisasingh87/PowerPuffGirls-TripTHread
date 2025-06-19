@@ -45,14 +45,43 @@ def login():
     return jsonify(response), 200
 
 
-# Protect a route with jwt_required, which will kick out requests without a valid JWT
+@api.route('/signup', methods=['POST'])
+def register_user():
+    email = request.json.get('email')
+    password = request.json.get('password')
+
+    #checking if the email exist
+    email = email.lower()
+    user = User.query.filter_by(email=email).first()
+
+    #check iif the email exist
+    if user is not None and user.email == email:
+        response = {
+            "message": f"{user.email} already exist. Please log in."
+        }
+        return jsonify(response), 403
+    
+    new_user = User()
+    new_user.email = email
+    new_user.password = password
+    new_user.is_active = True
+    db.session.add(new_user)
+    db.session.commit()
+
+    response = {
+        "message": f"You have successfully Signed up!, Now please login to enter to your account as a {new_user.email}"
+    }
+    return jsonify(response), 201
+
+
+# Protect a route with jwt_required, which will kick out requests
+# without a valid JWT present.
 @api.route("/protected", methods=["GET"])
 @jwt_required()
 def protected():
     # Access the identity of the current user with get_jwt_identity
-    current_user_id = get_jwt_identity()
-    user = User.query.get(current_user_id)
-    
-    return jsonify({"id": user.id, "username": user.username }), 200
+    current_user = get_jwt_identity()
+    return jsonify(logged_in_as=current_user), 200
+
 
 

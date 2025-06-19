@@ -40,6 +40,18 @@ export const login = async (email, password, dispatch) => {
   return data;
 };
 
+export const logout = (dispatch) => {
+  sessionStorage.removeItem('token');
+  dispatch({
+        type: 'loggedOut',
+        payload: {
+          message: null,
+          token: null,
+          isLoginSuccessful: false,
+          loggedIn: false
+        }
+      });
+}
 
 export const signOut = async(email, password, dispatch) => {
     const options = {
@@ -54,7 +66,7 @@ export const signOut = async(email, password, dispatch) => {
       })
   }
 
-const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/signup`, options);
+  const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/signup`, options);
 
   // handle any non-200 error codes
   if (!response.ok) {

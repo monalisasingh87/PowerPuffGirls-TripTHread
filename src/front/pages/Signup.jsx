@@ -15,7 +15,7 @@ export const Signup = () => {
 
     useEffect(() => {
         if (store.isSignUpSuccessful) {
-            navigate('/HomePage')
+            navigate('/login')
         }
     }, [store.isSignUpSuccessful])
 

@@ -34,6 +34,19 @@ export default function storeReducer(store, action = {}) {
       }
     }
 
+    case 'loggedOut':
+    {
+      const {message, token, isLoginSuccessful, loggedIn} = action.payload;
+      
+      return {
+        ...store,
+        message: message,
+        token: token,
+        isLoginSuccessful: isLoginSuccessful,
+        loggedIn: loggedIn,
+      }
+    }
+
     default:
       throw Error('Unknown action.');
   }    
