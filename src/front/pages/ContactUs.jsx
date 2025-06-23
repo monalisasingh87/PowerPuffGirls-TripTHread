@@ -6,30 +6,42 @@ export const ContactUs = () => {
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
     const [isSubmitted, setIsSubmitted] = useState(false);
+
     const token = localStorage.getItem("token");
+    const isLoggedIn = Boolean(token);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            const headers = {
+                "Content-Type": "application/json",
+            };
+            // if (isLoggedIn) {
+            //     headers["Authorization"] = `Bearer ${token}`;
+            // }
+
+            const body = isLoggedIn ? {
+                content: message
+            } :
+                {
+                    message_name: name,
+                    message_email: email,
+                    content: message,
+                };
+
             const response = await fetch("https://bookish-fishstick-q746xgg49jg6hx9gv-3000.app.github.dev/api/contactus", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    // "Authorization": `Bearer ${token}`
-                },
-                body: JSON.stringify(
-                    {
-                        message_name: name,
-                        message_email: email,
-                        content: message,
-                    }
-                )
+                headers,
+                body: JSON.stringify(body),
             });
 
             const data = await response.json();
             setIsSubmitted(true);
+
+
         } catch (error) {
-            alert("Oooops, something is not right...")
+            console.error("Error during contact form submit:", error);
+            alert('oops, something is not right..');
         }
     }
 

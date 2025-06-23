@@ -8,10 +8,15 @@ from flask_cors import CORS
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 
+
+
+# app = Flask(__name__)
+# CORS(app)
 api = Blueprint('api', __name__)
 
+
 # Allow CORS requests to this API
-CORS(api)
+# CORS(api)
 
 
 # @api.route('/hello', methods=['POST', 'GET'])
@@ -51,7 +56,6 @@ def post_message():
     )
     db.session.add(new_message)
     db.session.commit()
-
 
     # Send email
     # msg = MailMessage(
