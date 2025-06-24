@@ -1,6 +1,7 @@
 import { useState } from "react"
 
 
+
 export const ContactUs = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -47,8 +48,9 @@ export const ContactUs = () => {
 
     return (
 
-
+        
         <div className="contact-form">
+
             <h1>Contact Us</h1>
             {isSubmitted ?
                 (<p>Thank you for your patience, we will review and reach back to you in serval days due to the amount!</p>) :
