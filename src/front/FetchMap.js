@@ -1,28 +1,20 @@
-export const fetchMapData = async (name, dispatch) => {
-    try{
-        const res = await fetch(`https://restcountries.com/v3.1/name/${encodeURIComponent(name)}?fullText=true`);
-        const data = await res.json();
-        const country = data[0];
+export const fetchMapData = async (alpha3Code, dispatch) => {
+    try {
+        const res = await fetch(`https://restcountries.com/v3.1/alpha/${alpha3Code}`);
+        if (!res.ok) throw new Error(`Country fetch failed: ${res.status}`);
+        const [country] = await res.json();
 
-        const timezone = country.timezone[0];
-        const timeRes = await fetch(`https://worldtimeapi.org/api/timezone/${timezone}`)
-        const timeData = await timeRes.json();
-    
+        dispatch({
+            type: "set_country_info",
+            payload: {
+                name: country.name.common,
+                flag: country.flags.svg,
+                currency: Object.values(country.currencies)[0].name,
+                language: Object.values(country.languages)[0],
+            },
+        });
 
-    dispatch({
-        type: "set_country_info",
-        payload: {
-            name: country.name.common, // <--- for tooltip match
-            flag: country.flags.svg,
-            currency: Object.values(country.currencies)[0].name,
-            time: timeData.datetime,
-        },
-    });
-
-    } catch(err) {
-        console.error("Error fetching country infor:", err);
+    } catch (err) {
+        console.error("Error fetching country info:", err);
     }
-    
-
-
-}
+};
