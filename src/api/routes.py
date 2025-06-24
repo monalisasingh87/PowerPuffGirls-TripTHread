@@ -9,7 +9,6 @@ from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 
 
-
 # app = Flask(__name__)
 # CORS(app)
 api = Blueprint('api', __name__)
@@ -36,17 +35,30 @@ api = Blueprint('api', __name__)
 
 
 @api.route('/contactus', methods=['POST'])
-# @jwt_required()
+@jwt_required(optional=True)
 def post_message():
+  try:
     data = request.get_json()
-    # current_user_id = get_jwt_identity()
-    current_user_id = 1
+    print("Incoming data:", data)
+    current_user_id = get_jwt_identity()
+    # current_user_id = 1
     name = data.get("message_name")
     email = data.get("message_email")
     content = data.get("content")
 
-    if not all([name, email, content]):
-        return jsonify({"error": "missing required fields"}), 400
+   
+    if not content:
+        return jsonify({"error": "missing content"}), 400
+
+    if not current_user_id:
+        if not name or not email:
+            return jsonify({"error": "missing name or email"}), 400
+    else:
+        user = User.query.get(current_user_id)
+        if not user:
+            return jsonify({"error": "user not found"}), 404
+        name = user.name
+        email = user.email
 
     new_message = Message(
         message_name=name,
@@ -67,3 +79,8 @@ def post_message():
     # mail.send(msg)
 
     return jsonify({"message": "Message received"}), 201
+   
+
+  except Exception as e:
+        print("❌ Error in /contactus:", e, type(e))
+        return jsonify({"error": "Server error"}), 500

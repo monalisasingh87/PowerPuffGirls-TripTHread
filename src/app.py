@@ -21,8 +21,8 @@ static_file_dir = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../dist/')
 
 app = Flask(__name__)
-CORS(app)
-
+CORS(app, resources={
+     r"/api/*": {"origins": "https://organic-cod-wr5x4jj5944636q6-3000.app.github.dev"}}, supports_credentials=True)
 
 
 # Email config (using Gmail as example)
@@ -94,3 +94,4 @@ def serve_any_other_file(path):
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
     app.run(host='0.0.0.0', port=PORT, debug=True)
+# src/app.py

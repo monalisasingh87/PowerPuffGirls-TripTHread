@@ -33,7 +33,7 @@ class Message(db.Model):
         String(120), nullable=False)
 
     user_id: Mapped[int] = mapped_column(
-        ForeignKey("users.id"), nullable=False)
+        ForeignKey("users.id"), nullable=True)
     user: Mapped["User"] = relationship("User", back_populates="messages")
 
     def serialize(self):

@@ -16,9 +16,9 @@ export const ContactUs = () => {
             const headers = {
                 "Content-Type": "application/json",
             };
-            // if (isLoggedIn) {
-            //     headers["Authorization"] = `Bearer ${token}`;
-            // }
+            if (isLoggedIn) {
+                headers["Authorization"] = `Bearer ${token}`;
+            }
 
             const body = isLoggedIn ? {
                 content: message
@@ -29,7 +29,7 @@ export const ContactUs = () => {
                     content: message,
                 };
 
-            const response = await fetch("https://bookish-fishstick-q746xgg49jg6hx9gv-3000.app.github.dev/api/contactus", {
+            const response = await fetch("https://organic-cod-wr5x4jj5944636q6-3001.app.github.dev/api/contactus", {
                 method: "POST",
                 headers,
                 body: JSON.stringify(body),
