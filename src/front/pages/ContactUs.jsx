@@ -1,5 +1,5 @@
 import { useState } from "react"
-
+// import { ThreeScene } from '../components/ThreeScene'
 
 
 export const ContactUs = () => {
@@ -48,39 +48,50 @@ export const ContactUs = () => {
 
     return (
 
-        
-        <div className="contact-form">
-
-            <h1>Contact Us</h1>
-            {isSubmitted ?
-                (<p>Thank you for your patience, we will review and reach back to you in serval days due to the amount!</p>) :
-
-                (
-                    <>
-                        <div className="form-name mt-4">
-                            <label htmlFor="">Name:</label>
-                            <input type="text" onChange={e => setName(e.target.value)} />
-                        </div>
-                        <div className="form-email mt-4">
-                            <label htmlFor="">Email:</label>
-                            <input type="email" onChange={e => setEmail(e.target.value)} />
-                        </div>
-                        <div className="form-message mt-4">
-                            <label htmlFor="">Message:</label>
-                            <textarea rows="5" onChange={e => setMessage(e.target.value)} value={message} />
-                        </div>
-                        <div className="form-button text-center mt-4">
-                            <button className="submit"
-                                onClick={handleSubmit}
-                            >Submit</button>
-                        </div>
-                    </>
-                )
+        // <div style={{ position: 'relative', width: '100vw', height: '100vh' }}>
+        //     {/* Background 3D scene */}
+        //     <div style={{
+        //         position: 'absolute',
+        //         top: 30,
+        //         left: 30,
+        //         width: '40%',
+        //         height: '40%',
 
 
-            }
-        </div>
+        //     }}>
+        //         <ThreeScene />
+        //     </div>
 
 
+            <div className="contact-form">
+
+                <h1>Contact Us</h1>
+                {isSubmitted ?
+                    (<p>Thank you for your patience, we will review and reach back to you in serval days due to the amount!</p>) :
+
+                    (
+                        <>
+                            <div className="form-name mt-4">
+                                <label htmlFor="">Name:</label>
+                                <input type="text" onChange={e => setName(e.target.value)} />
+                            </div>
+                            <div className="form-email mt-4">
+                                <label htmlFor="">Email:</label>
+                                <input type="email" onChange={e => setEmail(e.target.value)} />
+                            </div>
+                            <div className="form-message mt-4">
+                                <label htmlFor="">Message:</label>
+                                <textarea rows="5" onChange={e => setMessage(e.target.value)} value={message} />
+                            </div>
+                            <div className="form-button text-center mt-4">
+                                <button className="submit"
+                                    onClick={handleSubmit}
+                                >Submit</button>
+                            </div>
+                        </>
+                    )}
+            </div>
+
+        // </div>
     )
 }

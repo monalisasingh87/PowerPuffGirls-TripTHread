@@ -7,14 +7,17 @@ body {
 .contact-form {
   width: 500px;
   height: 700px;
-  border: 1px solid black;
+  border: 1px solid rgb(16, 36, 74);
   padding-top: 50px;
   border-radius: 10px;
-  box-shadow: 0px 0px 10px #aaa;
-  margin: 40px auto;
+  box-shadow: 10px 10px 10px #1771ba;
+  margin: 100px auto;
   padding-left: 20px;
   transition: box-shadow 0.3s ease;
   font-size: 30px;
+  position: relative;
+  z-index: 3;
+  color: rgb(16, 54, 144);
 }
 .contact-form:hover {
   box-shadow: 30px 30px 30px #1771ba;
@@ -25,18 +28,19 @@ body {
   padding-bottom: 30px;
   text-align: center;
   /* opacity: 0.8; */
+
   background: linear-gradient(
     270deg,
-    #6288e2,
-    #839bea,
-    hsl(208, 75%, 66%),
-    #326fd7,
-    #0553ee
+    #06a5ee,
+    #1867cd,
+    hsl(60, 10%, 96%),
+    #082e8c,
+    #283384
   );
   background-size: 400% 400%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: glitter 3s ease infinite;
+  animation: glitter 12s ease infinite;
 }
 @keyframes glitter {
   0% {
@@ -76,6 +80,7 @@ body {
   transition: background-color 0.3s ease;
   width: 100px;
   height: 50px;
+  box-shadow: 2px 2px 8px black;
 }
 .submit:hover {
   background-color: #4f9df2;
