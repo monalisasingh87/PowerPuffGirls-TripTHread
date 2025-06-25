@@ -1,85 +1,96 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
+from flask import request, jsonify, Blueprint
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from api.models import db, User, Post, PostImage
-from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 
 api = Blueprint('api', __name__)
-
-# Allow CORS requests to this API
 CORS(api)
-
-
-@api.route('/hello', methods=['POST', 'GET'])
-def handle_hello():
-
-    response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-    }
-
-    return jsonify(response_body), 200
-
-
-@api.route('/user', methods=['POST'])
-def create_user():
-    data = request.get_json()
-
-    username = data.get("username")
-    email = data.get("email")
-    password = data.get("password")  # Note: hash this in production
-
-    if not username or not email or not password:
-        return jsonify({"error": "Missing fields"}), 400
-
-    # Check if username or email already exists
-    if User.query.filter_by(username=username).first():
-        return jsonify({"error": "Username already exists"}), 409
-    if User.query.filter_by(email=email).first():
-        return jsonify({"error": "Email already exists"}), 409
-
-    user = User(
-        username=username,
-        email=email,
-        password=password,
-        is_active=True
-    )
-    db.session.add(user)
-    db.session.commit()
-
-    return jsonify(user.serialize()), 201
-
 
 @api.route('/journals', methods=['POST'])
 @jwt_required()
 def create_journal():
     current_user_id = get_jwt_identity()
     data = request.get_json()
-
     title = data.get("title")
     content = data.get("content")
-    image_urls = data.get("images", [])  # optional list of image URLs
 
     if not title or not content:
         return jsonify({"error": "Title and content are required"}), 400
 
-    # Fetch user object
     user = db.session.get(User, current_user_id)
     if not user:
         return jsonify({"error": "User not found"}), 404
 
-    # Create post with user relationship
-    new_post = Post(data=data, user=user)
-
-    # Handle optional image uploads
-    for url in image_urls:
-        if url.strip():
-            new_post.images.append(PostImage(image_url=url))
-
-    # Save to DB
-    db.session.add(new_post)
+    post = Post(title=title, content=content, user_id=user.id, username=user.username)
+    db.session.add(post)
     db.session.commit()
 
-    return jsonify(new_post.serialize()), 201
+    return jsonify(post.serialize()), 201
+
+@api.route('/journals/<int:post_id>/images', methods=['POST'])
+@jwt_required()
+def upload_image(post_id):
+    post = Post.query.get(post_id)
+    if not post:
+        return jsonify({"error": "Post not found"}), 404
+
+    if 'image' not in request.files:
+        return jsonify({"error": "No image file provided"}), 400
+
+    image = request.files['image']
+    image_url = f"https://fakeimage.com/{image.filename}"
+
+    post_image = PostImage(post_id=post.id, image_url=image_url)
+    db.session.add(post_image)
+    db.session.commit()
+
+    return jsonify(post_image.serialize()), 201
+
+@api.route('/journals/<int:post_id>', methods=['PUT'])
+@jwt_required()
+def edit_journal(post_id):
+    current_user_id = get_jwt_identity()
+    post = Post.query.get(post_id)
+
+    if not post or post.user_id != current_user_id:
+        return jsonify({"error": "Unauthorized or not found"}), 403
+
+    data = request.get_json()
+    post.title = data.get("title", post.title)
+    post.content = data.get("content", post.content)
+
+    db.session.commit()
+    return jsonify(post.serialize()), 200
+
+@api.route('/journals/<int:post_id>', methods=['DELETE'])
+@jwt_required()
+def delete_journal(post_id):
+    current_user_id = get_jwt_identity()
+    post = Post.query.get(post_id)
+
+    if not post or post.user_id != current_user_id:
+        return jsonify({"error": "Unauthorized or not found"}), 403
+
+    db.session.delete(post)
+    db.session.commit()
+    return jsonify({"message": "Post deleted"}), 200
+
+@api.route('/journals/<int:post_id>/images/<int:image_id>', methods=['DELETE'])
+@jwt_required()
+def delete_image(post_id, image_id):
+    current_user_id = get_jwt_identity()
+    post = Post.query.get(post_id)
+    image = PostImage.query.get(image_id)
+
+    if not post or not image or post.user_id != current_user_id or image.post_id != post.id:
+        return jsonify({"error": "Unauthorized or not found"}), 403
+
+    db.session.delete(image)
+    db.session.commit()
+    return jsonify({"message": "Image deleted"}), 200
+
+
+
