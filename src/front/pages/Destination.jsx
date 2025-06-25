@@ -30,6 +30,7 @@ export const Destination = () => {
                         <div className="sampleImage">
                             {location ? <img src={location.originalimage.source} alt="samplePiture" /> : <p>image cannot open</p>}
                         </div>
+                        
                     </div>
                 </div>
                 <div className="col-2"></div>

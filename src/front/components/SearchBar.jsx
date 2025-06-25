@@ -51,6 +51,17 @@ export const SearchBar = ({ setLocation }) => {
                 className="btn btn-secondary search-button"
                 onClick={fetch_location}
             >Search</button>
+
+            <div className="dropdown">
+                <a className="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Wishlist
+                </a>
+
+                <ul className="">
+                    <li><a class="dropdown-item" href="#">Nanjing</a></li>
+
+                </ul>
+            </div>
         </div>
     )
 }
