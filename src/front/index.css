@@ -81,3 +81,24 @@
 .title:hover {
   box-shadow: 10px 10px 10px #868eaa;
 }
+.wishlist-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 40px;
+}
+.wishlist-title h1 {
+  margin: auto;
+}
+.heart-block {
+  display: flex;
+
+  width: 180px;
+  justify-content: space-around;
+}
+.heart-block h6 {
+  margin: auto;
+}
+.row {
+  margin-top: 60px;
+}

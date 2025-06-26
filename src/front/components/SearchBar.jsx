@@ -58,7 +58,7 @@ export const SearchBar = ({ setLocation }) => {
                 </a>
 
                 <ul className="">
-                    <li><a class="dropdown-item" href="#">Nanjing</a></li>
+                    {/* <li><a class="dropdown-item" href="#">Nanjing</a></li> */}
 
                 </ul>
             </div>
