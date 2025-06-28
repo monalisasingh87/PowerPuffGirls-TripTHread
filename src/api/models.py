@@ -8,7 +8,6 @@ db = SQLAlchemy()
 
 class User(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
-    username: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
     email: Mapped[str] = mapped_column(String(120), unique=True, nullable=True)
     password: Mapped[str] = mapped_column(nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False)
@@ -27,7 +26,6 @@ class User(db.Model):
 
 class Post(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
-    username: Mapped[str] = mapped_column(String(150), nullable=False)
     title: Mapped[str] = mapped_column(String(150), nullable=False)
     content: Mapped[str] = mapped_column(nullable=False)
     created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
@@ -45,12 +43,11 @@ class Post(db.Model):
             "created_at": self.created_at.isoformat(),
             "user": {
                 "id": self.user.id,
-                "username": self.user.username,
             },
             "images": [img.serialize() for img in self.images]
         }
 
-    def __init__(self, data=None, user=None):
+    def __init__(self, data, user):
         if data:
             self.title = data.get("title")
             self.content = data.get("content")

@@ -26,4 +26,8 @@ const Main = () => {
   );
 };
 
-ReactDOM.createRoot(document.getElementById('root')).render(<Main />);
+// Guard to prevent double `createRoot` execution (especially in Vite HMR)
+const rootElement = document.getElementById('root');
+if (!rootElement._reactRootContainer) {
+  ReactDOM.createRoot(rootElement).render(<Main />);
+}

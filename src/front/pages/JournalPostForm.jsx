@@ -2,13 +2,16 @@ import { useState } from "react";
 import { createPost, uploadImage } from "../../api";
 import { useAuth } from "../hooks/useAuth";
 import "./JournalPostForm.css";
+import useGlobalReducer from "../hooks/useGlobalReducer"
 
 export const JournalPostForm = () => {
+  const {store, dispatch} = useGlobalReducer();
   const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("")
   const [content, setContent] = useState("");
   const [images, setImages] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { user } = useAuth();
+  const { user }  = useAuth();
 
 const handleSubmit = async (e) => {
   e.preventDefault();
@@ -18,21 +21,25 @@ const handleSubmit = async (e) => {
     return;
   }
 
+  console.log("🔐 Token in localStorage:", localStorage.getItem("token"));
+  console.log("📦 Submitting post with:", { title, content });
+
   setIsSubmitting(true);
   try {
-    // Only send title and content — no user_id here
+    // Only send title and content 
     const postResponse = await createPost({ title, content });
     const postId = postResponse.id;
 
     await Promise.all(images.map((img) => uploadImage(postId, img)));
 
     setTitle("");
+    setAuthor("");
     setContent("");
     setImages([]);
-    alert("Post created!");
+    alert("Your Post is created!");
   } catch (error) {
     console.error("Error:", error);
-    alert("Something went wrong while creating the post.");
+    alert("Something went wrong while creating your Post.");
   } finally {
     setIsSubmitting(false);
   }
@@ -40,6 +47,11 @@ const handleSubmit = async (e) => {
 
 
   return (
+    <>
+    {!store.loggedIn ?
+      <h1>
+        You must be logged in to view this page
+      </h1>:
     <form onSubmit={handleSubmit} className="journal-form">
       <h2 className="form-title">Create a Journal Post</h2>
 
@@ -50,6 +62,17 @@ const handleSubmit = async (e) => {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Enter a title"
+          required
+        />
+      </label>
+
+      <label>
+        Author
+        <input
+          type="text"
+          value={author}
+          onChange={(e) => setAuthor(e.target.value)}
+          placeholder="Enter author name"
           required
         />
       </label>
@@ -90,5 +113,7 @@ const handleSubmit = async (e) => {
         {isSubmitting ? "Submitting..." : "Create Post"}
       </button>
     </form>
+    }
+    </>
   );
 };

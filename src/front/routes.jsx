@@ -10,12 +10,15 @@ import { Home } from "./pages/Home";
 import { Single } from "./pages/Single";
 import { Demo } from "./pages/Demo";
 import { JournalPostForm } from "./pages/JournalPostForm";
-import { Dashboard } from "./pages/Dashboard";
 import { Login } from "./pages/Login";
 import { HomePage } from "./pages/HomePage";
 import { Signup } from "./pages/Signup";
+import JournalFeed from "./pages/JournalFeed";
 
-export const router = createBrowserRouter(
+
+
+
+export const router= createBrowserRouter(
     createRoutesFromElements(
     // CreateRoutesFromElements function allows you to build route elements declaratively.
     // Create your routes here, if you want to keep the Navbar and Footer in all views, add your new routes inside the containing Route.
@@ -34,9 +37,15 @@ export const router = createBrowserRouter(
         <Route path="/single/:theId" element={ <Single />} />  {/* Dynamic route for single items */}
         <Route path="/demo" element={<Demo />} />
         <Route path= "/journalpostform" element={ <JournalPostForm /> } />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/journals" element={<JournalFeed />} />
 
 
       </Route>
-    )
+    ),
+    {
+      future: {
+      v7_relativeSplatPath: true,
+      v7_startTransition: true,
+    },
+  }
 );

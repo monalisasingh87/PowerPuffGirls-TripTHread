@@ -27,7 +27,7 @@ export const login = async (email, password, dispatch) => {
 
   // if the response is a 200
   const data = await response.json();
-  sessionStorage.setItem('token', data.access_token);
+  localStorage.setItem('token', data.access_token);
   dispatch({
     type: 'fetchedToken',
     payload: {
@@ -41,7 +41,7 @@ export const login = async (email, password, dispatch) => {
 };
 
 export const logout = (dispatch) => {
-  sessionStorage.removeItem('token');
+  localStorage.removeItem('token');
   dispatch({
         type: 'loggedOut',
         payload: {
@@ -53,7 +53,7 @@ export const logout = (dispatch) => {
       });
 }
 
-export const signOut = async(email, password, dispatch) => {
+export const signUp = async(email, password, dispatch) => {
     const options = {
       method: 'POST',
       mode: 'cors',

@@ -17,7 +17,11 @@ from flask_cors import CORS
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../dist/')
 app = Flask(__name__)
-CORS(app) 
+CORS(app, supports_credentials=True, resources={
+    r"/api/*": {
+        "origins": "https://super-duper-rotary-phone-5g446jr56j49c4gj7-3000.app.github.dev"
+    }
+})
 app.url_map.strict_slashes = False
 
 

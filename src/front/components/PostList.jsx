@@ -14,7 +14,6 @@ export const PostList = () => {
         <div key={post.id} style={{border: '1px solid #ccc', marginBottom: '1rem', padding: '1rem'}}>
           <h3>{post.title}</h3>
           <p>{post.content}</p>
-          <p><i>by {post.user.username}</i></p>
           {post.images.map(img => (
             <img key={img.id} src={img.image_url} alt="Post" width="200" />
           ))}

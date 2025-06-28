@@ -15,7 +15,6 @@ def setup_commands(app):
         print("Creating test users...")
         for x in range(1, int(count) + 1):
             user = User(
-                username=f"testuser{x}",
                 email=f"test_user{x}@test.com",
                 password="123456",
                 is_active=True
@@ -33,10 +32,8 @@ def setup_commands(app):
             print(f"User with email {email} already exists.")
             return
 
-        username = email.split("@")[0]
         user = User(
             email=email,
-            username=username,
             password="abc123",
             is_active=True
         )
