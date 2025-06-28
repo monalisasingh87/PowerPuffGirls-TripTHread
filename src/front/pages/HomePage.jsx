@@ -5,11 +5,9 @@ export const HomePage = () => {
 
     return(
         <>
-        <div className="container">
         <WorldMap>
             
         </WorldMap>
-        </div>
         </>
     );
 }

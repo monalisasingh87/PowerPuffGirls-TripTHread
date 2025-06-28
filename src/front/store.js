@@ -1,6 +1,5 @@
 export const initialStore=()=>{
   return{
-    hoverCountryInfo: null, // start empty
     message: null,
     token: null,
     isLoginSuccessful: false,
@@ -11,11 +10,6 @@ export const initialStore=()=>{
 
 export default function storeReducer(store, action = {}) {
   switch(action.type){
-    case 'set_country_info':
-      return {
-        ...store,
-        hoverCountryInfo: action.payload
-      };
     case 'fetchedToken':
     {
       const {message, token, isLoginSuccessful, loggedIn} = action.payload;
