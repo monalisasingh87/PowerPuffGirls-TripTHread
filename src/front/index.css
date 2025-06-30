@@ -10,10 +10,10 @@ body {
 .contact-form {
   width: 500px;
   height: 700px;
-  border: 1px solid rgb(16, 36, 74);
+  /* border: 1px solid rgb(128, 200, 234); */
   padding-top: 50px;
   border-radius: 10px;
-  box-shadow: 10px 10px 10px #aed1ee;
+  /* box-shadow: 10px 10px 10px #aed1ee; */
   margin: 100px auto;
   padding-left: 20px;
   transition: box-shadow 0.3s ease;
@@ -22,9 +22,11 @@ body {
   z-index: 3;
   color: rgb(16, 54, 144);
   background-color: #fff;
+  opacity: 0.9;
 }
 .contact-form:hover {
-  box-shadow: 30px 30px 30px #b9daf6;
+  box-shadow: 0px 0px 10px 20px #dcedfd;
+  opacity: 1;
 }
 .contact-form h1 {
   font-weight: 700;
@@ -42,7 +44,7 @@ body {
     #283384
   );
   background-size: 400% 400%;
-  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: glitter 12s ease infinite;
 }
@@ -98,4 +100,48 @@ body {
 .footer a {
   text-decoration: none;
   color: #fff;
+}
+.glitter-circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  position: absolute;
+  background-color: #b8e8fe;
+  /* box-shadow: 0 0 20px 10px #b8e8fe; */
+  animation-name: glitter-hover;
+  animation-duration: 20s;
+  animation-iteration-count: infinite;
+  opacity: 0.6;
+}
+@keyframes glitter-hover {
+  0% {
+    background-color: #fff;
+    left: -5px;
+    top: -5px;
+    box-shadow: 0 0 20px 10px #fff;
+  }
+  25% {
+    background-color: #fff;
+    left: 495px;
+    top: -5px;
+    box-shadow: 0 0 20px 10px #fff;
+  }
+  50% {
+    background-color: #fff;
+    left: 495px;
+    top: 695px;
+    box-shadow: 0 0 20px 10px #fff;
+  }
+  75% {
+    background-color: #fff;
+    left: -5px;
+    top: 695px;
+    box-shadow: 0 0 20px 10px #fff;
+  }
+  100% {
+    background-color: #fff;
+    left: -5px;
+    top: -5px;
+    box-shadow: 0 0 20px 10px #fff;
+  }
 }
