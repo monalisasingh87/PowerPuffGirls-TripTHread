@@ -14,6 +14,7 @@ from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 # from flask_mail import Mail, Message
 
+
 # from models import Person
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
@@ -39,6 +40,11 @@ CORS(app, resources={
 
 app.url_map.strict_slashes = False
 app.config["JWT_SECRET_KEY"] = "euihwi3i3desuy8yx[q$^83hclu90)]"
+jwt = JWTManager(app)
+
+
+# Setup the Flask-JWT-Extended extension
+app.config["JWT_SECRET_KEY"] = os.environ.get('FLASK_SECRET')
 jwt = JWTManager(app)
 
 # database condiguration
