@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-
-export const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+import JournalPostCard from "../components/JournalPostCard"; 
 
 const JournalFeed = () => {
     const [posts, setPosts] = useState([]);
@@ -23,18 +22,26 @@ const JournalFeed = () => {
         <div className="container py-4">
             <h2 className="text-center mb-4">Journal Posts</h2>
             <div className="row">
-                {posts.map((post) => (
-                    <div className="col-12 col-md-6 col-lg-4 mb-4" key={post.id}>
-                        <JournalPostCard
-                            title={post.title}
-                            content={post.content}
-                            username={post.username}
-                            created_at={post.created_at}
-                        />
-                    </div>
-                ))}
+                {posts.map((post) => {
+                    // Extract author from the first line of content
+                    const match = post.content.match(/^\(Author:\s*(.*?)\)/);
+                    const author = match ? match[1] : "Anonymous";
+                    const cleanedContent = post.content.replace(/^\(Author:\s*.*?\)\n?/, "");
+
+                    return (
+                        <div className="col-12 col-md-6 col-lg-4 mb-4" key={post.id}>
+                            <JournalPostCard
+                                title={post.title}
+                                content={cleanedContent}
+                                username={author}
+                                created_at={post.created_at}
+                            />
+                        </div>
+                    );
+                })}
             </div>
         </div>
     );
 };
+
 export default JournalFeed;

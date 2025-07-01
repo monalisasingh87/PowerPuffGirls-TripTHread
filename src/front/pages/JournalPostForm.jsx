@@ -21,13 +21,11 @@ const handleSubmit = async (e) => {
     return;
   }
 
-  console.log("🔐 Token in localStorage:", localStorage.getItem("token"));
-  console.log("📦 Submitting post with:", { title, content });
-
   setIsSubmitting(true);
   try {
-    // Only send title and content 
-    const postResponse = await createPost({ title, content });
+    const formattedContent = `(Author: ${author || "Anonymous"})\n${content}`;
+
+    const postResponse = await createPost({ title, content: formattedContent });
     const postId = postResponse.id;
 
     await Promise.all(images.map((img) => uploadImage(postId, img)));
@@ -44,7 +42,6 @@ const handleSubmit = async (e) => {
     setIsSubmitting(false);
   }
 };
-
 
   return (
     <>
@@ -72,8 +69,7 @@ const handleSubmit = async (e) => {
           type="text"
           value={author}
           onChange={(e) => setAuthor(e.target.value)}
-          placeholder="Enter author name"
-          required
+          placeholder="Enter author name(optional)"
         />
       </label>
 
