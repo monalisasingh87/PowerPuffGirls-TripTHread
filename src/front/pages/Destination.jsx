@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react"
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import { Link } from "react-router-dom";
-import { SearchBar } from "../components/SearchBar.jsx"
+import { SearchBar } from "../components/SearchBar.jsx";
+import { useLocation } from "react-router-dom";
 
 
 
@@ -12,7 +13,31 @@ export const Destination = () => {
     const [location, setLocation] = useState(null);
     const { store, dispatch } = useGlobalReducer();
     const isInWishlist = location ? store.wishlist.some(item => item.title === location.title) : false;
+    const { state } = useLocation();
+    const passedCountry = state?.countryName;
 
+
+    useEffect(() => {
+    const fetchLocation = async () => {
+        if (!passedCountry) return;
+        const url = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(passedCountry)}`;
+        try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error("Page not found");
+        const data = await response.json();
+        const validPlaceKeyWords = ['city', 'mountain', 'country', 'river', 'lake', 'capital', 'state', 'borough', 'region', 'island'];
+        const isValid = validPlaceKeyWords.some(keyword => data.extract.toLowerCase().includes(keyword));
+        if ((data.type === "Internal error") || (data.status === 404) || (!isValid)) {
+            throw new Error("Invalid content");
+        }
+        setLocation(data);
+        } catch (error) {
+        console.error("Error fetching location:", error);
+        setLocation(null);
+        }
+    };
+    fetchLocation();
+    }, [passedCountry]);
 
 
     return (
