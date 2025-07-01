@@ -34,6 +34,14 @@ export default function storeReducer(store, action = {}) {
       }
     }
 
+    case 'set_hello': {
+      return {
+        ...store,
+        message: action.payload,
+      };
+    }
+
+
     case 'loggedOut':
     {
       const {message, token, isLoginSuccessful, loggedIn} = action.payload;

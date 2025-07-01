@@ -3,6 +3,8 @@ import { createPost, uploadImage } from "../../api";
 import { useAuth } from "../hooks/useAuth";
 import "./JournalPostForm.css";
 import useGlobalReducer from "../hooks/useGlobalReducer"
+import { useNavigate } from "react-router-dom";
+
 
 export const JournalPostForm = () => {
   const {store, dispatch} = useGlobalReducer();
@@ -12,6 +14,7 @@ export const JournalPostForm = () => {
   const [images, setImages] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { user }  = useAuth();
+  const navigate = useNavigate();
 
 const handleSubmit = async (e) => {
   e.preventDefault();
@@ -35,6 +38,9 @@ const handleSubmit = async (e) => {
     setContent("");
     setImages([]);
     alert("Your Post is created!");
+    console.log("Redirecting to /journals...");
+    navigate("/journals");
+    console.log("Should be redirected.");
   } catch (error) {
     console.error("Error:", error);
     alert("Something went wrong while creating your Post.");

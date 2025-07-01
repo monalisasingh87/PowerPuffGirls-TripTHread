@@ -7,7 +7,10 @@ from api.models import db, User, Post, PostImage
 from flask_cors import CORS
 
 api = Blueprint('api', __name__)
-CORS(api)
+
+CORS(api, supports_credentials=True, origins=[
+    "https://super-duper-rotary-phone-5g446jr56j49c4gj7-3000.app.github.dev"
+])
 
 
 @api.route("/ping")

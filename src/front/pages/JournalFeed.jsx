@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import JournalPostCard from "../components/JournalPostCard"; 
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 const JournalFeed = () => {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const res = await fetch(`${BACKEND_URL}/journals`);
+                const res = await fetch(`${BACKEND_URL}/api/journals`);
                 const data = await res.json();
                 setPosts(data);
             } catch (error) {
@@ -35,6 +37,7 @@ const JournalFeed = () => {
                                 content={cleanedContent}
                                 username={author}
                                 created_at={post.created_at}
+                                images={post.images}
                             />
                         </div>
                     );
