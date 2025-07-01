@@ -31,11 +31,11 @@ export const Navbar = () => {
 
 					{isLoggedIn ? (
 						<>
-							<Link to="logout">
-								<button className="btn btn-danger" onClick={handleLogout}>
-									Logout
-								</button>
-							</Link>
+
+							<button className="btn btn-danger" onClick={handleLogout}>
+								Logout
+							</button>
+
 						</>
 					)
 

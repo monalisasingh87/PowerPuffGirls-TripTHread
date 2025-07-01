@@ -22,8 +22,21 @@ static_file_dir = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../dist/')
 
 app = Flask(__name__)
-CORS(app, resources={
-     r"/api/*": {"origins": "https://organic-cod-wr5x4jj5944636q6-3000.app.github.dev"}}, supports_credentials=True)
+CORS(
+    app,
+    origins=["https://organic-cod-wr5x4jj5944636q6-3000.app.github.dev"],
+    supports_credentials=True,
+    allow_headers=["Content-Type", "Authorization"],
+    methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+)
+
+@app.after_request
+def apply_cors_headers(response):
+    response.headers["Access-Control-Allow-Origin"] = "https://organic-cod-wr5x4jj5944636q6-3000.app.github.dev"
+    response.headers["Access-Control-Allow-Credentials"] = "true"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type,Authorization"
+    response.headers["Access-Control-Allow-Methods"] = "GET,POST,PUT,DELETE,OPTIONS"
+    return response
 
 
 # Email config (using Gmail as example)
