@@ -1,20 +1,21 @@
 // Import necessary components and functions from react-router-dom.
 
 import {
-    createBrowserRouter,
-    createRoutesFromElements,
-    Route,
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
 } from "react-router-dom";
 import { Layout } from "./pages/Layout";
 import { Home } from "./pages/Home";
 import { Single } from "./pages/Single";
 import { Demo } from "./pages/Demo";
+import { Destination } from "./pages/Destination";
 import { Login } from "./pages/Login";
 import { HomePage } from "./pages/HomePage";
 import { Signup } from "./pages/Signup";
 
 export const router = createBrowserRouter(
-    createRoutesFromElements(
+  createRoutesFromElements(
     // CreateRoutesFromElements function allows you to build route elements declaratively.
     // Create your routes here, if you want to keep the Navbar and Footer in all views, add your new routes inside the containing Route.
     // Root, on the contrary, create a sister Route, if you have doubts, try it!
@@ -30,7 +31,8 @@ export const router = createBrowserRouter(
         <Route path= "/homepage" element={<HomePage />} />
         <Route path= "/signup" element={<Signup />} />
         <Route path="/single/:theId" element={ <Single />} />  {/* Dynamic route for single items */}
-        <Route path="/demo" element={<Demo />} />
+        {/* <Route path="/demo" element={<Demo />} /> */}
+        <Route path="/destination" element={<Destination />} />
       </Route>
     )
 );
