@@ -39,7 +39,7 @@ const handleSubmit = async (e) => {
     setImages([]);
     alert("Your Post is created!");
     console.log("Redirecting to /journals...");
-    navigate("/journals");
+    navigate(`/journal/${postId}`); 
     console.log("Should be redirected.");
   } catch (error) {
     console.error("Error:", error);

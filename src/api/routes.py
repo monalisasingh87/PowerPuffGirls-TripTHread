@@ -45,7 +45,12 @@ def create_journal():
         db.session.add(post)
         db.session.commit()
 
-        return jsonify(post.serialize()), 201
+        return jsonify({
+            "id": post.id,
+            "message": "Post created successfully",
+            **post.serialize()  # optionally return full post data
+        }), 201
+    
     except Exception as e:
         print("POST /journals error:", e)
         return jsonify({"error": "Server error"}), 500

@@ -3,7 +3,7 @@
 body {
   margin: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-image: url("docs/assets/img1.jpg");
+  background-image: url("/docs/assets/background1.jpg");
   background-size: cover;
   background-position: center;
  /* background: linear-gradient(to right, #9ea2ee, #4028f5);*/

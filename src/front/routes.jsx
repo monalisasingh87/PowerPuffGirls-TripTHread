@@ -13,7 +13,8 @@ import { JournalPostForm } from "./pages/JournalPostForm";
 import { Login } from "./pages/Login";
 import { HomePage } from "./pages/HomePage";
 import { Signup } from "./pages/Signup";
-import JournalFeed from "./pages/JournalFeed";
+import { JournalFeed } from "./pages/JournalFeed";
+import { JournalPostDetail } from "./pages/JournalPostDetail";
 
 
 
@@ -38,6 +39,7 @@ export const router= createBrowserRouter(
         <Route path="/demo" element={<Demo />} />
         <Route path= "/journalpostform" element={ <JournalPostForm /> } />
         <Route path="/journals" element={<JournalFeed />} />
+        <Route path="/journal/:id" element={<JournalPostDetail />} />
 
 
       </Route>

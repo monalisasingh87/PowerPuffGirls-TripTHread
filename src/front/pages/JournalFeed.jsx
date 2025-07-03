@@ -3,7 +3,7 @@ import JournalPostCard from "../components/JournalPostCard";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
-const JournalFeed = () => {
+export const JournalFeed = () => {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
@@ -11,6 +11,7 @@ const JournalFeed = () => {
             try {
                 const res = await fetch(`${BACKEND_URL}/api/journals`);
                 const data = await res.json();
+                console.log("Journal feed data:", data);
                 setPosts(data);
             } catch (error) {
                 console.error("Failed to fetch posts", error);
@@ -33,6 +34,7 @@ const JournalFeed = () => {
                     return (
                         <div className="col-12 col-md-6 col-lg-4 mb-4" key={post.id}>
                             <JournalPostCard
+                                id={post.id}
                                 title={post.title}
                                 content={cleanedContent}
                                 username={author}
@@ -46,5 +48,3 @@ const JournalFeed = () => {
         </div>
     );
 };
-
-export default JournalFeed;
