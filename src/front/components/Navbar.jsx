@@ -32,6 +32,7 @@ export const Navbar = () => {
 					{isLoggedIn ? (
 						<>
 
+
 							<button className="btn btn-danger" onClick={handleLogout}>
 								Logout
 							</button>
@@ -48,12 +49,13 @@ export const Navbar = () => {
 								<Link to="/signup">
 									<button className="btn btn-primary">Signup</button>
 								</Link>
-
+                	<Link to="/destination">
+						<button className="btn btn-primary">Destination</button>
+					</Link>
 							</>
 						)}
-
 				</div>
 			</div>
-		</nav>
+		</nav >
 	);
 };
