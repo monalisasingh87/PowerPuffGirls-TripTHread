@@ -5,6 +5,7 @@ export const initialStore=()=>{
     isLoginSuccessful: false,
     loggedIn: false,
     isSignUpSuccessful: false,
+    wishlist: [],
   }
 }
 
@@ -45,6 +46,28 @@ export default function storeReducer(store, action = {}) {
         isLoginSuccessful: isLoginSuccessful,
         loggedIn: loggedIn,
       }
+    }
+
+        case "AddToWishlist": {
+      const newLocation = action.payload;
+      const isInWishList = store.wishlist.some(
+        (item) => item.title === newLocation.title
+      );
+      return {
+        ...store,
+        wishlist: isInWishList
+          ? store.wishlist
+          : [...store.wishlist, newLocation],
+      };
+    }
+
+    case "RemoveFromWishlist": {
+      return {
+        ...store,
+        wishlist: store.wishlist.filter(
+          (item) => item.title !== action.payload.title
+        ),
+      };
     }
 
     default:

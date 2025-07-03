@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
 import { useNavigate } from "react-router-dom";
 import { feature } from "topojson-client";
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Tooltip from 'react-bootstrap/Tooltip';
 import useGlobalReducer from "../hooks/useGlobalReducer"
 import { countryInfo } from "../CountryInfo";
 
@@ -18,6 +16,10 @@ export const WorldMap = () => {
   // State to track hovered country and mouse position
   const [hoveredCountry, setHoveredCountry] = useState(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const handleCountryClick = (geo) => {
+  const countryName = geo.properties.name;
+  navigate("/destination", { state: { countryName } });
+};
 
   const getTooltip = (geo) => {
     const name = geo.properties.name;
@@ -38,7 +40,7 @@ export const WorldMap = () => {
       <div 
           className="container"
           style={{  position: "relative", 
-                    backgroundImage: "url('src/front/assets/img/yellowbg.png')",
+                    backgroundImage: "url('src/front/assets/img/background2.jpg')",
                     width: "100%",
                     height: "100%",
                     backgroundSize: "cover",
@@ -52,8 +54,9 @@ export const WorldMap = () => {
                 <Geography
                   key={geo.rsmKey}
                   geography={geo}
-                  fill="#484F66"
-                  stroke="#00000"
+                  onClick={() => handleCountryClick(geo)}
+                  fill="#1E1E57"
+                  stroke="rgb(50, 48, 95)"
                   onMouseEnter={e => {
                     setHoveredCountry(geo);
                     setMousePos({ x: e.clientX, y: e.clientY });
@@ -61,8 +64,8 @@ export const WorldMap = () => {
                   onMouseMove={e => setMousePos({ x: e.clientX, y: e.clientY })}
                   onMouseLeave={() => setHoveredCountry(null)}
                   style={{
-                    default: { fill: "#484F66", outline: "none" },
-                    hover: { fill: "#2a354d", outline: "none" },
+                    default: { fill: "#F3F2F7", outline: "none" },
+                    hover: { fill: "#FF6B00", outline: "none" },
                     pressed: { fill: "#E42", outline: "none" },
                   }}
                   tabIndex="0"

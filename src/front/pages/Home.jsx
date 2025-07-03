@@ -1,7 +1,8 @@
 import React, { useEffect } from "react"
-import rigoImageUrl from "../assets/img/rigo-baby.jpg";
-import yellowbg from "../assets/img/yellowbg.png";
+import background2 from "../assets/img/background2.jpg";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import { WorldMap } from "./WorldMap.jsx";
+import { Link } from "react-router-dom";
 
 export const Home = () => {
 
@@ -35,16 +36,26 @@ export const Home = () => {
 
 	return (
 		<div className="text-center mt-5">
-			<h1 className="display-4">Welcome to TripThread!</h1>
-			<p className="lead">
-				<img src={background} className="img-fluid rounded-circle mb-3" alt="vacation" />
-			</p>
+      <div className="container">
+				<div className="col-10 p-lg-5 mx-auto my-5">
+					<h2 className="display-4 fw-normal" style={{color: "#3CA9D1"}}>TripThread</h2>
+					<p className="lead">Explore the world visually. Discover languages, currency, stories and dreams — all in one place</p>
+					
+          <Link to="/destination">
+            <a className="btn btn-lg btn-outline-dark" style={{hover: "#FF6B00"}}>Start Exploring</a>
+          </Link>
+				</div>
+				<WorldMap></WorldMap>  
+</div>
+
+
+			
 			<div className="alert alert-info">
 				{store.message ? (
 					<span>{store.message}</span>
 				) : (
 					<span className="text-danger">
-						Loading message from the backend (make sure your python 🐍 backend is running)...
+						{}
 					</span>
 				)}
 			</div>

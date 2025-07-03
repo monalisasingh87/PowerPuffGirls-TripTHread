@@ -1,0 +1,20 @@
+/* Remove default browser spacing */
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Clean up Bootstrap 5 navbar spacing */
+.navbar-brand {
+  text-decoration: none;  
+  margin-left: 5px;  
+  margin-top: 0 !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+.loginbg {
+    background-image: url("src/front/assets/img/background2.png");
+}
