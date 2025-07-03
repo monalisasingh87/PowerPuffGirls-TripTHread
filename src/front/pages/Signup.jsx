@@ -30,7 +30,7 @@ export const Signup = () => {
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
                  }}>
-            <div className="row p-5">
+            <div className="row p-5 mt-0">
                     <div className="col-4"></div>
                     <div className="col-4">
                         <div class="card text-center p-3" 
@@ -69,7 +69,7 @@ export const Signup = () => {
                                     </button>
                                 </div>
                         </div>
-                    </div>
+                      </div>
                     <div className="col-4"></div>
                 </div>
             </div>  

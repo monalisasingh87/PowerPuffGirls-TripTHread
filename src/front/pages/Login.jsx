@@ -9,26 +9,15 @@ export const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    //const [loginAttempted, setLoginAttempted] = useState(false); // NEW
+
 
 
     const handleClick = () => {
-       // e.preventDefault(); // ← prevent form reload
-       // setLoginAttempted(true);
         login(email, password, dispatch)
     }
 
     useEffect(() => {
-       // if (!loginAttempted) return; // NEW: Avoid triggering on first render
-
-       // console.log("Login attempted. Success?", store.isLoginSuccessful);
-
-
-       // if (store.isLoginSuccessful === false) {
-          //  alert("Email o password incorrect, please try again");
-       // }
-       // else
-        if (store.isLoginSuccessful) {
+            if (store.isLoginSuccessful) {
             navigate('/homepage')
         }
     }, [store.isLoginSuccessful])
@@ -51,7 +40,7 @@ export const Login = () => {
                 <h1>You are already logged in</h1>
                 : 
                 <>
-                <div className="row p-5">
+                <div className="row mt-0 p-5">
                     <div className="col-4"></div>
                     <div className="col-4">
                         <div class="card cardLogin p-3" 
@@ -62,12 +51,6 @@ export const Login = () => {
                                 Login
                             </div>
                             <div class="card-body">
-                                {/* 🔴 Alert for failed login */}
-                                {loginError && (
-                                    <div className="alert alert-danger" role="alert">
-                                    Email or password is incorrect. Please try again.
-                                    </div>
-                                )}
                                 <div className="mb-3 mt-5">
                                     <input
                                     type='email'

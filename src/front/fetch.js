@@ -47,8 +47,8 @@ export const logout = (dispatch) => {
         payload: {
           message: null,
           token: null,
-          isLoginSuccessful: false,
-          loggedIn: false
+          isLoginSuccessful: true,
+          loggedIn: true
         }
       });
 }

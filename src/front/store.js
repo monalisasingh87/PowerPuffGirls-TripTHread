@@ -1,5 +1,5 @@
-export const initialStore=()=>{
-  return{
+export const initialStore = () => {
+  return {
     message: null,
     token: null,
     isLoginSuccessful: false,
@@ -10,10 +10,9 @@ export const initialStore=()=>{
 }
 
 export default function storeReducer(store, action = {}) {
-  switch(action.type){
-    case 'fetchedToken':
-    {
-      const {message, token, isLoginSuccessful, loggedIn} = action.payload;
+  switch (action.type) {
+    case "fetchedToken": {
+      const { message, token, isLoginSuccessful, loggedIn } = action.payload;
 
       return {
         ...store,
@@ -21,34 +20,32 @@ export default function storeReducer(store, action = {}) {
         token: token,
         isLoginSuccessful: isLoginSuccessful,
         loggedIn: loggedIn,
-      }
+      };
     }
 
-    case 'successfulSignUp':
-    {
-      const {message, isSignUpSuccessful} = action.payload;
+    case "successfulSignUp": {
+      const { message, isSignUpSuccessful } = action.payload;
 
       return {
         ...store,
         message: message,
         isSignUpSuccessful: isSignUpSuccessful,
-      }
+      };
     }
 
-    case 'loggedOut':
-    {
-      const {message, token, isLoginSuccessful, loggedIn} = action.payload;
-      
+    case "loggedOut": {
+      const { message, token, isLoginSuccessful, loggedIn } = action.payload;
+
       return {
         ...store,
         message: message,
         token: token,
         isLoginSuccessful: isLoginSuccessful,
         loggedIn: loggedIn,
-      }
+      };
     }
 
-        case "AddToWishlist": {
+    case "AddToWishlist": {
       const newLocation = action.payload;
       const isInWishList = store.wishlist.some(
         (item) => item.title === newLocation.title
@@ -69,8 +66,7 @@ export default function storeReducer(store, action = {}) {
         ),
       };
     }
-
     default:
-      throw Error('Unknown action.');
-  }    
+      throw Error("Unknown action.");
+  }
 }

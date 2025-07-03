@@ -10,7 +10,7 @@ export const Home = () => {
 
 	const loadMessage = async () => {
 		try {
-			const backendUrl = import.meta.env.VITE_BACKEND_URL
+			const backendUrl = import.meta.env.VITE_BACKEND_URL?.replace(/\/$/,"")
 
 			if (!backendUrl) throw new Error("VITE_BACKEND_URL is not defined in .env file")
 
