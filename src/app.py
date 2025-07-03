@@ -13,14 +13,50 @@ from api.commands import setup_commands
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 
+
 # from models import Person
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../dist/')
+
 app = Flask(__name__)
+CORS(
+    app,
+    origins=["https://organic-cod-wr5x4jj5944636q6-3000.app.github.dev"],
+    supports_credentials=True,
+    allow_headers=["Content-Type", "Authorization"],
+    methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+)
+
+@app.after_request
+def apply_cors_headers(response):
+    response.headers["Access-Control-Allow-Origin"] = "https://organic-cod-wr5x4jj5944636q6-3000.app.github.dev"
+    response.headers["Access-Control-Allow-Credentials"] = "true"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type,Authorization"
+    response.headers["Access-Control-Allow-Methods"] = "GET,POST,PUT,DELETE,OPTIONS"
+    return response
+
+
+# Email config (using Gmail as example)
+# app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+# app.config['MAIL_PORT'] = 587
+# app.config['MAIL_USE_TLS'] = True
+# app.config['MAIL_USERNAME'] = os.getenv(
+#     "mayuan131522@gmail.com")  # Your Gmail address
+# app.config['MAIL_PASSWORD'] = os.getenv(
+#     "Nuhedii")  # App password from Gmail
+
+# mail = Mail(app)
+
+
 app.url_map.strict_slashes = False
+
+app.config["JWT_SECRET_KEY"] = "euihwi3i3desuy8yx[q$^83hclu90)]"
+jwt = JWTManager(app)
+
 CORS(app)
+
 
 
 # Setup the Flask-JWT-Extended extension
@@ -80,3 +116,4 @@ def serve_any_other_file(path):
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
     app.run(host='0.0.0.0', port=PORT, debug=True)
+# src/app.py
