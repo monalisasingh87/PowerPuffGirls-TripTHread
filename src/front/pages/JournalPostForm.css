@@ -102,3 +102,20 @@ button[disabled] {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
+.alert-box {
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  font-weight: bold;
+  border: 1px solid #cc0033;
+}
+
+.alert-success {
+  background-color: #ffe6ea; /* light pink */
+  color: #cc0033; /* deep red */
+}
+
+.alert-error {
+  background-color: #ffe6ea;
+  color: #cc0033;
+}

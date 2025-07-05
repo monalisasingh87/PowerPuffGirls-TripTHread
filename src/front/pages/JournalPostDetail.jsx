@@ -61,7 +61,7 @@ export const JournalPostDetail = () => {
     <div className="journal-detail-container">
       <h1 className="journal-detail-title">{post.title}</h1>
       <h6 className="journal-detail-meta">
-        By {post.author || "Anonymous"} on{" "}
+       By {localStorage.getItem(`post-author-${id}`) || "Anonymous"} on{" "}
         {new Date(post.created_at).toLocaleDateString()}
       </h6>
       <hr />
