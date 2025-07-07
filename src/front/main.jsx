@@ -6,6 +6,7 @@ import { router } from './routes';
 import { StoreProvider } from './hooks/useGlobalReducer';
 import { BackendURL } from './components/BackendURL';
 
+
 const Main = () => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 

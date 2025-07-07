@@ -23,36 +23,40 @@ export const Navbar = () => {
 				 <span className="navbar-brand mb-0 h1">Journals</span>
 				</Link>
 				<div className="ml-auto">
+
+
+
+
+
+					<Link to="/contactus">
+						<button className="btn btn-primary">Contact Us</button>
+					</Link>
+
 					{isLoggedIn ? (
-					<>
-						<Link to="/">
-							<span className="navbar-brand mb-0 h1">post</span>
-						</Link>
-						<Link to="/">
-							<span className="navbar-brand mb-0 h1">post</span>
-						</Link>
-						<Link to="/">
-							<span className="navbar-brand mb-0 h1">post</span>
-						</Link>
-						<button className="btn btn-danger" onClick={handleLogout}>
-							Logout
-						</button>
-						
-					</>			
+						<>
+
+
+							<button className="btn btn-danger" onClick={handleLogout}>
+								Logout
+							</button>
+
+						</>
 					)
-					
-					 : 
-					(
-					<>
-						<Link to="/login" className="text-decoration-none">
-							<span className="navbar-brand mb-0 h1">Login</span>
-						</Link>
-						<Link to="/signup">
-							<button className="btn btn-primary">Signup</button>
-						</Link>
-						
-					</>
-					)}
+
+						:
+						(
+							<>
+								<Link to="/login">
+									<span className="navbar-brand mb-0 h1">Login</span>
+								</Link>
+								<Link to="/signup">
+									<button className="btn btn-primary">Signup</button>
+								</Link>
+                	<Link to="/destination">
+						<button className="btn btn-primary">Destination</button>
+					</Link>
+							</>
+						)}
 				</div>
 				<div className="ml-auto">
 					<Link to="/journalpostform">
@@ -60,6 +64,6 @@ export const Navbar = () => {
 					</Link>
 				</div>
 			</div>
-		</nav>
+		</nav >
 	);
 };

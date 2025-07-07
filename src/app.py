@@ -21,6 +21,12 @@ CORS(app, supports_credentials=True, origins=[ "https://super-duper-rotary-phone
 )
 app.url_map.strict_slashes = False
 
+app.config["JWT_SECRET_KEY"] = "euihwi3i3desuy8yx[q$^83hclu90)]"
+jwt = JWTManager(app)
+
+CORS(app)
+
+
 
 # Setup the Flask-JWT-Extended extension
 app.config["JWT_SECRET_KEY"] = os.environ.get('FLASK_SECRET')
@@ -61,7 +67,9 @@ def sitemap():
         return generate_sitemap(app)
     return send_from_directory(static_file_dir, 'index.html')
 
-# Any other endpoint will try to serve it like a static file
+# any other endpoint will try to serve it like a static file
+
+
 @app.route('/<path:path>', methods=['GET'])
 def serve_any_other_file(path):
     if not os.path.isfile(os.path.join(static_file_dir, path)):
@@ -74,3 +82,4 @@ def serve_any_other_file(path):
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
     app.run(host='0.0.0.0', port=PORT, debug=True)
+# src/app.py
