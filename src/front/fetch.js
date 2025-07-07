@@ -60,7 +60,7 @@ export const logout = (dispatch) => {
   });
 };
 
-export const signOut = async (email, password, dispatch) => {
+export const signUp = async (email, password, dispatch) => {
   const options = {
     method: "POST",
     mode: "cors",

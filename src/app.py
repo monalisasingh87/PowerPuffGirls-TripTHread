@@ -6,7 +6,7 @@ from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
 from flask_swagger import swagger
 from api.utils import APIException, generate_sitemap
-from api.models import db
+from api.models import db, User, Post, PostImage, Message
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
@@ -42,8 +42,9 @@ else:
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize migration
-MIGRATE = Migrate(app, db, compare_type=True)
 db.init_app(app)
+MIGRATE = Migrate(app, db, compare_type=True)
+
 
 
 # Add the admin

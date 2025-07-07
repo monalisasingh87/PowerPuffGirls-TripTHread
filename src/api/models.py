@@ -9,13 +9,16 @@ db = SQLAlchemy()
 class User(db.Model):
     __tablename__ = "users"
     id: Mapped[int] = mapped_column(primary_key=True)
-    email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
+    email: Mapped[str] = mapped_column(
+        String(120), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False)
 
     # Add relationship to posts
-    posts: Mapped[list["Post"]] = relationship("Post", back_populates="user", cascade="all, delete-orphan")
-    messages: Mapped[list["Message"]] = relationship("Message", back_populates="user")
+    posts: Mapped[list["Post"]] = relationship(
+        "Post", back_populates="user", cascade="all, delete-orphan")
+    messages: Mapped[list["Message"]] = relationship(
+        "Message", back_populates="user")
 
     def serialize(self):
         return {
@@ -26,17 +29,18 @@ class User(db.Model):
 
 
 class Post(db.Model):
+    __tablename__ = "posts"
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str] = mapped_column(String(150), nullable=False)
     content: Mapped[str] = mapped_column(nullable=False)
     created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
-    user_id: Mapped[int] = mapped_column(ForeignKey("user.id"), nullable=False)
+    
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
 
     user: Mapped["User"] = relationship("User", back_populates="posts")
     images: Mapped[list["PostImage"]] = relationship("PostImage", back_populates="post", cascade="all, delete-orphan")
-            # do not serialize the password, its a securitdely breach
-    
-    
+    # do not serialize the password, its a securitdely breach
+
     def serialize(self):
         return {
             "id": self.id,
@@ -48,6 +52,7 @@ class Post(db.Model):
             },
             "images": [img.serialize() for img in self.images]
         }
+
     def __init__(self, data, user):
         if data:
             self.title = data.get("title")
@@ -82,13 +87,17 @@ class Message(db.Model):
             "message_email": self.message_email,
         }
 
+
 class PostImage(db.Model):
+    __tablename__ = "post_images" 
     id: Mapped[int] = mapped_column(primary_key=True)
     image_url: Mapped[str] = mapped_column(nullable=False)
-    post_id: Mapped[int] = mapped_column(ForeignKey("post.id"), nullable=False)
 
     # Relationship back to Post
+    post_id: Mapped[int] = mapped_column(ForeignKey("posts.id"), nullable=False)
     post: Mapped["Post"] = relationship("Post", back_populates="images")
+
+    
 
     def serialize(self):
         return {
