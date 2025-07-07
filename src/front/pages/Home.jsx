@@ -8,9 +8,10 @@ export const Home = () => {
 
 	const { store, dispatch } = useGlobalReducer()
 
+
 	const loadMessage = async () => {
 		try {
-			const backendUrl = import.meta.env.VITE_BACKEND_URL?.replace(/\/$/,"")
+           // const backendUrl = import.meta.env.VITE_BACKEND_URL?.replace(/\/$/,"")
 
 			if (!backendUrl) throw new Error("VITE_BACKEND_URL is not defined in .env file")
 
@@ -34,6 +35,7 @@ export const Home = () => {
 		loadMessage()
 	}, [])
 
+
 	return (
 		<div className="text-center mt-5">
       <div className="container">
@@ -42,7 +44,7 @@ export const Home = () => {
 					<p className="lead">Explore the world visually. Discover languages, currency, stories and dreams — all in one place</p>
 					
           <Link to="/destination">
-            <a className="btn btn-lg btn-outline-dark" style={{hover: "#FF6B00"}}>Start Exploring</a>
+            <span className="btn btn-lg btn-outline-dark" style={{hover: "#FF6B00"}}>Start Exploring</span>
           </Link>
 				</div>
 				<WorldMap></WorldMap>  

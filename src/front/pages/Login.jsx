@@ -43,14 +43,14 @@ export const Login = () => {
                 <div className="row mt-0 p-5">
                     <div className="col-4"></div>
                     <div className="col-4">
-                        <div class="card cardLogin p-3" 
+                        <div className="card cardLogin p-3" 
                             style={{boxShadow: "0 6px 12px rgba(52, 29, 105, 0.1)",
                                     borderRadius: "10px"}}
                             >
-                            <div class="card-header h2">
+                            <div className="card-header h2">
                                 Login
                             </div>
-                            <div class="card-body">
+                            <div className="card-body">
                                 <div className="mb-3 mt-5">
                                     <input
                                     type='email'

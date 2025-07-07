@@ -44,12 +44,15 @@ export const Navbar = () => {
 					(
 					<>
 						<Link to="/login" className="text-decoration-none">
-							<a className="navbar-brand mb-0 h1 text-primary" style={{textDecoration: "none", borderBottom: "none"}} >Login</a>
+							<span className="navbar-brand mb-0 h1 text-primary" style={{textDecoration: "none", borderBottom: "none"}} >Login</span>
 						</Link>
 						<Link to="/signup" className="text-decoration-none">
 							<button className="btn btn-primary">Signup</button>
 						</Link>
-						
+						<Link to="/contactus">
+							<button className="btn btn-primary">Contact Us</button>
+						</Link>
+
 					</>
 					)}
 				</div>

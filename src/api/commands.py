@@ -32,3 +32,9 @@ def setup_commands(app):
     @app.cli.command("insert-test-data")
     def insert_test_data():
         pass
+
+    @app.cli.command("drop-db")
+    def drop_db():
+        """Drops all tables in the database."""
+        db.drop_all()
+        print("All tables dropped!")
