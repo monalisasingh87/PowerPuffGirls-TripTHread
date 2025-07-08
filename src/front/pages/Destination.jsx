@@ -5,10 +5,6 @@ import { SearchBar } from "../components/SearchBar.jsx";
 import { useLocation } from "react-router-dom";
 
 
-
-
-
-
 export const Destination = () => {
     const [location, setLocation] = useState(null);
     const { store, dispatch } = useGlobalReducer();

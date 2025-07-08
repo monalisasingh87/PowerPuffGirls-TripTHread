@@ -7,13 +7,10 @@ from api.models import db, User, Post, PostImage, Message
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 
-# app = Flask(__name__)
-# CORS(app)
+
 api = Blueprint('api', __name__)
 
-CORS(api, supports_credentials=True, origins=[
-    "https://super-duper-rotary-phone-5g446jr56j49c4gj7-3000.app.github.dev"
-])
+CORS(api)
 
 
 @api.route("/ping")
@@ -223,7 +220,7 @@ def login():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
 
-    email_value = email_value.lower()
+    email_value = email.lower()
     user = User.query.filter_by(email=email_value).first()
 
     if user is None:

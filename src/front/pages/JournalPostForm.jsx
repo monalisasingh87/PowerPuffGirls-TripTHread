@@ -6,6 +6,8 @@ import useGlobalReducer from "../hooks/useGlobalReducer"
 import { useNavigate } from "react-router-dom";
 
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 export const JournalPostForm = () => {
   const { store, dispatch } = useGlobalReducer();
   const [title, setTitle] = useState("");
@@ -33,7 +35,7 @@ export const JournalPostForm = () => {
 
     try {
       const postResponse = await createPost({
-        title,
+        title: "title",
         content,
         author: author || "Anonymous"
       });
