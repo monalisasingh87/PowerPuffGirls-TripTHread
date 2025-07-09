@@ -6,8 +6,6 @@ import useGlobalReducer from "../hooks/useGlobalReducer"
 import { useNavigate } from "react-router-dom";
 
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-
 export const JournalPostForm = () => {
   const { store, dispatch } = useGlobalReducer();
   const [title, setTitle] = useState("");
@@ -34,11 +32,15 @@ export const JournalPostForm = () => {
     setIsSubmitting(true);
 
     try {
-      const postResponse = await createPost({
-        title: "title",
+      const postData = {
+        title,
         content,
-        author: author || "Anonymous"
-      });
+       // author: author || "Anonymous"
+      };
+
+      console.log("Submitting post data:", postData);
+
+      const postResponse = await createPost(postData);
       const postId = postResponse.id;
 
       localStorage.setItem(`post-author-${postId}`, author || "Anonymous");
@@ -49,7 +51,7 @@ export const JournalPostForm = () => {
       setAuthor("");
       setContent("");
       setImages([]);
-      setSuccessMessage("Your Post is created!");
+      setSuccessMessage("Your Post is created!Redirecting...");
       setTimeout(() => {
         navigate(`/journal/${postId}`);
       }, 2000);
@@ -70,9 +72,9 @@ export const JournalPostForm = () => {
           You must be logged in to view this page.
         </div>
       ) : (
-          <form onSubmit={handleSubmit} className="journal-form">
-            <h2 className="form-title">Create a Journal Post</h2>
- 
+        <form onSubmit={handleSubmit} className="journal-form">
+          <h2 className="form-title">Create a Journal Post</h2>
+
           {errorMessage && (
             <div className="alert-box alert-error">{errorMessage}</div>
           )}

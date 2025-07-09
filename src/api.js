@@ -15,6 +15,11 @@ const getAuthHeaders = () => {
 
 // Create post
 export const createPost = async ({ title, content }) => {
+  console.log("Creating post with data:", { title, content });
+  if (!title || !content) {
+    throw new Error("Missing title or content in request.");
+  }
+  
   const response = await fetch(`${API_BASE_URL}/api/journals`, {
     method: "POST",
     headers: {
@@ -26,10 +31,13 @@ export const createPost = async ({ title, content }) => {
 
   if (!response.ok) {
     const text = await response.text();
+    console.error("Failed to create post:", text);
     throw new Error(`Failed to create post: ${text}`);
   }
 
-  return await response.json();
+  const json = await response.json();
+  console.log("Post created successfully:", json); 
+  return json;
 };
 
 // Upload image

@@ -10,7 +10,7 @@ from flask_cors import CORS
 
 api = Blueprint('api', __name__)
 
-CORS(api)
+# CORS(api)
 
 
 @api.route("/ping")
@@ -21,39 +21,38 @@ def ping():
 @api.route('/journals', methods=['POST'])
 @jwt_required()
 def create_journal():
-    try:
-        current_user_id = get_jwt_identity()
-        print("JWT user ID:", current_user_id)
-        print("Current user ID:", current_user_id)
+    current_user_id = get_jwt_identity()
+    # print("JWT user ID:", current_user_id)
+    # print("Current user ID:", current_user_id)
 
+    data = request.get_json()
+    print("POST body:", data)
+    print("data.title", data['title'])
 
-        data = request.get_json()
-        print("POST body:", data)
-        print("data.title", data['title'])
-
-        title = data['title']
-        content = data['content']
-
-        if not title or not content:
-            return jsonify({"error": "Title and content are required"}), 400
-
-        user = db.session.get(User, int(current_user_id))  # Ensure it's int
-        if not user:
-            return jsonify({"error": "User not found"}), 404
-
-        post = Post(data=data, user=user)
-        db.session.add(post)
-        db.session.commit()
-
-        return jsonify({
-            "id": post.id,
-            "message": "Post created successfully",
-            **post.serialize()  # optionally return full post data
-        }), 201
     
-    except Exception as e:
-        print("POST /journals error:", e)
-        return jsonify({"error": "Server error"}), 500
+    title = data.get("title")
+    content = data.get("content")
+
+    if not title or not content:
+        return jsonify({"error": "Title and content are required"}), 422
+
+    user = db.session.get(User, int(current_user_id))
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    post = Post(title=title, content=content, user=user)
+    db.session.add(post)
+    db.session.commit()
+
+    return jsonify({
+        "id": post.id,
+        "message": "Post created successfully",
+        **post.serialize()  # optionally return full post data
+    }), 201
+
+    # Exception as e:
+    #     print("POST /journals error:", e)
+    #     return jsonify({"error": "Server error"}), 500
 
 
 @api.route('/journals/<int:post_id>/images', methods=['POST'])
@@ -143,25 +142,6 @@ def get_single_post(post_id):
         return jsonify({"error": "Post not found"}), 404
     return jsonify(post.serialize()), 200
 
-# Allow CORS requests to this API
-# CORS(api)
-
-
-# @api.route('/hello', methods=['POST', 'GET'])
-# def handle_hello():
-
-#     response_body = {
-#         "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-#     }
-
-#     return jsonify(response_body), 200
-
-# @api.route("/user", methods=["GET"])
-# def get_user():
-#     messages = Message.query.all()
-#     all_messages = list(map(lambda x: x.serialize(), messages))
-#     return jsonify(all_messages), 200
-
 
 @api.route('/contactus', methods=['POST'])
 @jwt_required(optional=True)
@@ -229,7 +209,7 @@ def login():
         return jsonify({'message': 'Sorry email or password not found'}), 401
 
     # the user DOES exist and the passwords matched
-    access_token = create_access_token(identity=user.id)
+    access_token = create_access_token(identity=str(user.id))
 
     response = {
         'access_token': access_token,
