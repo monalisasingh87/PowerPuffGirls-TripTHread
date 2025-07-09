@@ -37,7 +37,7 @@ export const ContactUs = () => {
                     content: message,
                 };
 
-            const response = await fetch("https://organic-cod-wr5x4jj5944636q6-3001.app.github.dev/api/contactus", {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/contactus`, {
                 method: "POST",
                 headers,
                 body: JSON.stringify(body),
