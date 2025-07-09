@@ -1,12 +1,11 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Message
+from flask import request, jsonify, Blueprint
+from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
+from api.models import db, User, Post, PostImage, Message
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
-from flask_jwt_extended import jwt_required, get_jwt_identity
-from flask_jwt_extended import create_access_token
 
 
 
@@ -17,20 +16,134 @@ api = Blueprint('api', __name__)
 CORS(api)
 
 
-# @api.route('/hello', methods=['POST', 'GET'])
-# def handle_hello():
+@api.route("/ping")
+def ping():
+    return jsonify({"message": "pong"})
 
-#     response_body = {
-#         "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-#     }
 
-#     return jsonify(response_body), 200
+@api.route('/journals', methods=['POST'])
+@jwt_required()
+def create_journal():
+    current_user_id = get_jwt_identity()
+    # print("JWT user ID:", current_user_id)
+    # print("Current user ID:", current_user_id)
 
-# @api.route("/user", methods=["GET"])
-# def get_user():
-#     messages = Message.query.all()
-#     all_messages = list(map(lambda x: x.serialize(), messages))
-#     return jsonify(all_messages), 200
+    data = request.get_json()
+    print("POST body:", data)
+    print("data.title", data['title'])
+
+    
+    title = data.get("title")
+    content = data.get("content")
+
+    if not title or not content:
+        return jsonify({"error": "Title and content are required"}), 422
+
+    user = db.session.get(User, int(current_user_id))
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    post = Post(title=title, content=content, user=user)
+    db.session.add(post)
+    db.session.commit()
+
+    return jsonify({
+        "id": post.id,
+        "message": "Post created successfully",
+        **post.serialize()  # optionally return full post data
+    }), 201
+
+    # Exception as e:
+    #     print("POST /journals error:", e)
+    #     return jsonify({"error": "Server error"}), 500
+
+
+@api.route('/journals/<int:post_id>/images', methods=['POST'])
+@jwt_required()
+def upload_image(post_id):
+    post = Post.query.get(post_id)
+    if not post:
+        return jsonify({"error": "Post not found"}), 404
+
+    if 'image' not in request.files:
+        return jsonify({"error": "No image file provided"}), 400
+
+    image = request.files['image']
+    image_url = f"https://fakeimage.com/{image.filename}"
+
+    post_image = PostImage(post_id=post.id, image_url=image_url)
+    db.session.add(post_image)
+    db.session.commit()
+
+    return jsonify(post_image.serialize()), 201
+
+
+@api.route('/journals/<int:post_id>', methods=['PUT'])
+@jwt_required()
+def edit_journal(post_id):
+    current_user_id = int(get_jwt_identity())
+    post = Post.query.get(post_id)
+
+    if not post or post.user_id != current_user_id:
+        return jsonify({"error": "Unauthorized or not found"}), 403
+
+    data = request.get_json()
+    post.title = data.get("title", post.title)
+    post.content = data.get("content", post.content)
+
+    db.session.commit()
+    return jsonify(post.serialize()), 200
+
+
+@api.route('/journals/<int:post_id>', methods=['DELETE'])
+@jwt_required()
+def delete_journal(post_id):
+    current_user_id = int(get_jwt_identity())
+    post = Post.query.get(post_id)
+
+    if not post or post.user_id != current_user_id:
+        return jsonify({"error": "Unauthorized or not found"}), 403
+
+    db.session.delete(post)
+    db.session.commit()
+    return jsonify({"message": "Post deleted"}), 200
+
+
+@api.route('/journals/<int:post_id>/images/<int:image_id>', methods=['DELETE'])
+@jwt_required()
+def delete_image(post_id, image_id):
+    current_user_id = int(get_jwt_identity())
+    post = Post.query.get(post_id)
+    image = PostImage.query.get(image_id)
+
+    if not post or not image or post.user_id != current_user_id or image.post_id != post.id:
+        return jsonify({"error": "Unauthorized or not found"}), 403
+
+    db.session.delete(image)
+    db.session.commit()
+    return jsonify({"message": "Image deleted"}), 200
+
+
+@api.route('/user/posts', methods=['GET'])
+@jwt_required()
+def get_user_posts():
+    current_user_id = int(get_jwt_identity())
+    posts = Post.query.filter_by(user_id=current_user_id).all()
+    return jsonify([post.serialize() for post in posts]), 200
+
+
+@api.route('/journals', methods=['GET'])
+def get_all_posts():
+    posts = Post.query.order_by(Post.created_at.desc()).all()
+    return jsonify([post.serialize() for post in posts]), 200
+
+
+@api.route('/journals/<int:post_id>', methods=['GET'])
+def get_single_post(post_id):
+    post = Post.query.get(post_id)
+    if not post:
+        return jsonify({"error": "Post not found"}), 404
+    return jsonify(post.serialize()), 200
 
 
 @api.route('/contactus', methods=['POST'])
@@ -90,18 +203,16 @@ def login():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
 
-    # query the DB to check if the user email exists
-    email = email.lower()
-    user = User.query.filter_by(email=email).first()
+    email_value = email.lower()
+    user = User.query.filter_by(email=email_value).first()
 
-    # create a condition if the user does NOT exist or if the password is wrong
     if user is None:
         return jsonify({'message': 'Sorry email or password not found'}), 401
     elif user is not None and user.password != password:
         return jsonify({'message': 'Sorry email or password not found'}), 401
 
     # the user DOES exist and the passwords matched
-    access_token = create_access_token(identity=user.id)
+    access_token = create_access_token(identity=str(user.id))
 
     response = {
         'access_token': access_token,
@@ -147,6 +258,5 @@ def register_user():
 @api.route("/homepage", methods=["GET"])
 @jwt_required()
 def protected():
-    # Access the identity of the current user with get_jwt_identity
     current_user = get_jwt_identity()
     return jsonify(logged_in_as=current_user), 200

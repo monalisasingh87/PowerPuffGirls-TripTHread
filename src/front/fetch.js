@@ -47,6 +47,7 @@ export const login = async (email, password, dispatch) => {
 };
 
 export const logout = (dispatch) => {
+  localStorage.removeItem('token');
   sessionStorage.removeItem("token");
   dispatch({
     type: "loggedOut",
@@ -71,7 +72,7 @@ export const signUp = async (email, password, dispatch) => {
       password: password,
     }),
   };
-
+  
   const response = await fetch(
     `${import.meta.env.VITE_BACKEND_URL}/api/signup`,
     options

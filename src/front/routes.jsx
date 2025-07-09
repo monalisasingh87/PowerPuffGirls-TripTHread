@@ -9,11 +9,14 @@ import { Layout } from "./pages/Layout";
 import { Home } from "./pages/Home";
 import { Single } from "./pages/Single";
 import { Demo } from "./pages/Demo";
+import { JournalPostForm } from "./pages/JournalPostForm";
 import { ContactUs } from "./pages/ContactUs";
 import { Destination } from "./pages/Destination";
 import { Login } from "./pages/Login";
 import { HomePage } from "./pages/HomePage";
 import { Signup } from "./pages/Signup";
+import { JournalFeed } from "./pages/JournalFeed";
+import { JournalPostDetail } from "./pages/JournalPostDetail";
 
 
 export const router = createBrowserRouter(
@@ -34,10 +37,20 @@ export const router = createBrowserRouter(
         <Route path= "/homepage" element={<HomePage />} />
         <Route path= "/signup" element={<Signup />} />
         <Route path="/single/:theId" element={ <Single />} />  {/* Dynamic route for single items */}
-        {/* <Route path="/demo" element={<Demo />} /> */}
+        <Route path="/demo" element={<Demo />} />
         <Route path="/contactus" element={<ContactUs />} />
         <Route path="/destination" element={<Destination />} />
-      </Route>
-    )
+        <Route path= "/journalpostform" element={ <JournalPostForm /> } />
+        <Route path="/journals" element={<JournalFeed />} />
+        <Route path="/journal/:id" element={<JournalPostDetail />} />
 
-);
+
+      </Route>
+    ),
+    {
+      future: {
+      v7_relativeSplatPath: true,
+      v7_startTransition: true,
+    },
+})
+       

@@ -15,9 +15,12 @@ export const Navbar = () => {
 
 	return (
 		<nav className="navbar navbar-light bg-light">
-			<div className="container">
-				<Link to="/">
+			<div className="container d-flex justify-content-between align-items-center">
+				<Link to="/" className="text-decoration-none">
 					<span className="navbar-brand mb-0 h1">Logo</span>
+				</Link>
+				<Link to="/journals" className="text-decoration-none">
+				 <span className="navbar-brand mb-0 h1">Journals</span>
 				</Link>
 				<div className="ml-auto">
 
@@ -54,6 +57,11 @@ export const Navbar = () => {
 					</Link>
 							</>
 						)}
+				</div>
+				<div className="ml-auto">
+					<Link to="/journalpostform">
+						<button className="btn btn-primary">Post your Journal</button>
+					</Link>
 				</div>
 			</div>
 		</nav >
