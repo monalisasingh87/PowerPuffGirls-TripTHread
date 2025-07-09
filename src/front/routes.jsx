@@ -17,6 +17,7 @@ import { Destination } from "./pages/Destination";
 import { WorldMap } from "./pages/WorldMap";
 
 
+
 export const router = createBrowserRouter(
   createRoutesFromElements(
     // CreateRoutesFromElements function allows you to build route elements declaratively.

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useGlobalReducer from "../hooks/useGlobalReducer";
-import { signOut } from '../fetch';
+import { signUp } from '../fetch';
 
 export const Signup = () => {
     const [email, setEmail] = useState('');
@@ -10,7 +10,7 @@ export const Signup = () => {
     const {store, dispatch} = useGlobalReducer();
 
     const handleClick = () => {
-        signOut(email, password, dispatch);
+        signUp(email, password, dispatch);
     }
 
     useEffect(() => {

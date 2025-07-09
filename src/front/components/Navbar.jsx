@@ -23,6 +23,10 @@ export const Navbar = () => {
 					
 				</Link>
 				<div className="ml-auto">
+					<Link to="/contactus">
+						<button className="btn btn-primary">Contact Us</button>
+					</Link>
+
 					{isLoggedIn ? (
 					<>
 						<Link to="/destination" className="text-decoration-none">

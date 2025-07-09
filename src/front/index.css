@@ -48,6 +48,7 @@ body {
   -webkit-text-fill-color: transparent;
   animation: glitter 12s ease infinite;
 }
+
 @keyframes glitter {
   0% {
     background-position: 0% 50%;

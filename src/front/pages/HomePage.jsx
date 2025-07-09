@@ -5,9 +5,7 @@ export const HomePage = () => {
 
     return(
         <>
-        <WorldMap>
-            
-        </WorldMap>
+            <WorldMap/>
         </>
     );
 }

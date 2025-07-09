@@ -9,7 +9,9 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_jwt_extended import create_access_token
 
 
+
 api = Blueprint('api', __name__)
+
 
 # Allow CORS requests to this API
 CORS(api)
@@ -141,7 +143,7 @@ def register_user():
 
 # Protect a route with jwt_required, which will kick out requests
 # without a valid JWT present.
-@api.route("/protected", methods=["GET"])
+@api.route("/homepage", methods=["GET"])
 @jwt_required()
 def protected():
     # Access the identity of the current user with get_jwt_identity
