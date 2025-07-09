@@ -20,6 +20,7 @@ export const Navbar = () => {
 					<span className="navbar-brand mb-0 h1">
 						<img src="src/front/assets/img/logoNavbar.png" width={250} height={90}></img>
 					</span>
+					
 				</Link>
 				<div className="ml-auto">
 					{isLoggedIn ? (
@@ -27,10 +28,10 @@ export const Navbar = () => {
 						<Link to="/destination" className="text-decoration-none">
 							<span className="navbar-brand mb-0 h1">Destination</span>
 						</Link>
-						<Link to="/" className="text-decoration-none">
+						<Link to="/PostJournal" className="text-decoration-none">
 							<span className="navbar-brand mb-0 h1">PostJournal</span>
 						</Link>
-						<Link to="/" className="text-decoration-none">
+						<Link to="/contactus" className="text-decoration-none">
 							<span className="navbar-brand mb-0 h1">Contact us</span>
 						</Link>
 						<button className="btn btn-danger" onClick={handleLogout}>
