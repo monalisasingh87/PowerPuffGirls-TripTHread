@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useGlobalReducer from "../hooks/useGlobalReducer";
-import {  signUp } from '../fetch';
+import { signUp } from '../fetch';
 
 export const Signup = () => {
     const [email, setEmail] = useState('');

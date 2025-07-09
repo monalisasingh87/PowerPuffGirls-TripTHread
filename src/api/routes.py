@@ -8,9 +8,12 @@ from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 
 
+
 api = Blueprint('api', __name__)
 
-# CORS(api)
+
+# Allow CORS requests to this API
+CORS(api)
 
 
 @api.route("/ping")
@@ -250,7 +253,9 @@ def register_user():
     return jsonify(response), 201
 
 
-@api.route("/protected", methods=["GET"])
+# Protect a route with jwt_required, which will kick out requests
+# without a valid JWT present.
+@api.route("/homepage", methods=["GET"])
 @jwt_required()
 def protected():
     current_user = get_jwt_identity()
