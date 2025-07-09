@@ -2,7 +2,7 @@ export const login = async (email, password, dispatch) => {
   const options = {
     method: "POST",
     mode: "cors",
-    credentials: "include",
+   // credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
@@ -59,7 +59,7 @@ export const logout = (dispatch) => {
   });
 };
 
-export const signOut = async (email, password, dispatch) => {
+export const signUp = async (email, password, dispatch) => {
   const options = {
     method: "POST",
     mode: "cors",
