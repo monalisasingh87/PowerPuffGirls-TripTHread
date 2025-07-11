@@ -64,7 +64,7 @@ export const ContactUs = () => {
                 <>
                     <div className="form-name mt-4">
                         <label>Name:</label>
-                        <input type="text" onChange={e => setName(e.target.value)} />
+                        <input type="text" onChange={e => setName(e.target.value)} className="form-name-input" />
                     </div>
                     <div className="form-message mt-4">
                         <label>Message:</label>
@@ -78,7 +78,7 @@ export const ContactUs = () => {
                 <>
                     <div className="form-name mt-4">
                         <label>Name:</label>
-                        <input type="text" onChange={e => setName(e.target.value)} />
+                        <input type="text" onChange={e => setName(e.target.value)} className="form-name-input" />
                     </div>
                     <div className="form-email mt-4">
                         <label>Email:</label>
