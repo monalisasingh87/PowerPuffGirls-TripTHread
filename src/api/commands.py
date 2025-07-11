@@ -34,7 +34,7 @@ def setup_commands(app):
 
         user = User(
             email=email,
-            password="abc123",d
+            password="abc123",
             is_active=True
         )
         db.session.add(user)
