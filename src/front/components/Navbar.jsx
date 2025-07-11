@@ -20,7 +20,9 @@ export const Navbar = () => {
 					<span className="navbar-brand mb-0 h1">
 						<img src="src/front/assets/img/logoNavbar.png" width={250} height={90}></img>
 					</span>
-					
+				</Link>
+				<Link to="/journals" className="text-decoration-none">
+				 <span className="navbar-brand mb-0 h1">Journals</span>
 				</Link>
 				<div className="ml-auto">
 					<Link to="/contactus">
@@ -60,6 +62,11 @@ export const Navbar = () => {
 
 					</>
 					)}
+				</div>
+				<div className="ml-auto">
+					<Link to="/journalpostform">
+						<button className="btn btn-primary">Post your Journal</button>
+					</Link>
 				</div>
 			</div>
 		</nav >
