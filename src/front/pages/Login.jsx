@@ -24,7 +24,7 @@ export const Login = () => {
 
     return (
         <>
-        <div className="" style={{  
+        <div className="bg-img" style={{  
                     position: "relative", 
                     backgroundImage: "url('src/front/assets/img/background2.jpg')",
                     width: "100%",

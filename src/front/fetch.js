@@ -1,4 +1,7 @@
 export const login = async (email, password, dispatch) => {
+  sessionStorage.removeItem("token");
+  localStorage.removeItem("token");
+
   const options = {
     method: "POST",
     mode: "cors",
@@ -49,6 +52,7 @@ export const login = async (email, password, dispatch) => {
 export const logout = (dispatch) => {
   localStorage.removeItem('token');
   sessionStorage.removeItem("token");
+ 
   dispatch({
     type: "loggedOut",
     payload: {

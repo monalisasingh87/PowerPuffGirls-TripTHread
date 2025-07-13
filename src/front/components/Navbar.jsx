@@ -21,29 +21,24 @@ export const Navbar = () => {
 						<img src="src/front/assets/img/logoNavbar.png" width={250} height={90}></img>
 					</span>
 				</Link>
-				<Link to="/journals" className="text-decoration-none">
-				 <span className="navbar-brand mb-0 h1">Journals</span>
-				</Link>
 				<div className="ml-auto">
-					<Link to="/contactus">
-						<button className="btn btn-primary">Contact Us</button>
+					<Link to="/destination" className="text-decoration-none">
+						<span className="navbar-brand mb-0 h1">Destination</span>
 					</Link>
-
+					<Link to="/journals" className="text-decoration-none">
+				 		<span className="navbar-brand mb-0 h1">Journals</span>
+					</Link>
+					<Link to="/contactus" className="text-decoration-none">
+						<span className="navbar-brand mb-0 h1">Contact Us</span>
+					</Link>
 					{isLoggedIn ? (
 					<>
-						<Link to="/destination" className="text-decoration-none">
-							<span className="navbar-brand mb-0 h1">Destination</span>
-						</Link>
-						<Link to="/PostJournal" className="text-decoration-none">
-							<span className="navbar-brand mb-0 h1">PostJournal</span>
-						</Link>
-						<Link to="/contactus" className="text-decoration-none">
-							<span className="navbar-brand mb-0 h1">Contact us</span>
+						<Link to="/journalpostform">
+						<button className="btn btn-primary me-3">Post your Journal</button>
 						</Link>
 						<button className="btn btn-danger" onClick={handleLogout}>
 							Logout
 						</button>
-						
 					</>			
 					)
 					
@@ -51,24 +46,18 @@ export const Navbar = () => {
 					(
 					<>
 						<Link to="/login" className="text-decoration-none">
-							<span className="navbar-brand mb-0 h1 text-primary" style={{textDecoration: "none", borderBottom: "none"}} >Login</span>
+							<span className="navbar-brand mb-0 h1 text-primary">Login</span>
 						</Link>
 						<Link to="/signup" className="text-decoration-none">
 							<button className="btn btn-primary">Signup</button>
-						</Link>
-						<Link to="/contactus">
-							<button className="btn btn-primary">Contact Us</button>
 						</Link>
 
 					</>
 					)}
 				</div>
-				<div className="ml-auto">
-					<Link to="/journalpostform">
-						<button className="btn btn-primary">Post your Journal</button>
-					</Link>
-				</div>
 			</div>
 		</nav >
 	);
 };
+
+

@@ -20,7 +20,7 @@ export const JournalPostDetail = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await fetch(`${BACKEND_URL}/api/journals/${id}`);
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/journals/${id}`);
         if (!res.ok) throw new Error("Failed to fetch post");
         const data = await res.json();
         setPost(data);
@@ -61,7 +61,7 @@ export const JournalPostDetail = () => {
     <div className="journal-detail-container">
       <h1 className="journal-detail-title">{post.title}</h1>
       <h6 className="journal-detail-meta">
-       By {localStorage.getItem(`post-author-${id}`) || "Anonymous"} on{" "}
+        By {localStorage.getItem(`post-author-${id}`) || "Anonymous"} on{" "}
         {new Date(post.created_at).toLocaleDateString()}
       </h6>
       <hr />
