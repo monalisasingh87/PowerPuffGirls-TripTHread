@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useSyncExternalStore } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 import { login } from "../fetch";
@@ -17,50 +17,82 @@ export const Login = () => {
     }
 
     useEffect(() => {
-        if (store.isLoginSuccessful) {
+            if (store.isLoginSuccessful) {
             navigate('/homepage')
         }
     }, [store.isLoginSuccessful])
 
     return (
         <>
-            <div className="text-center mt-5">
+        <div className="bg-img" style={{  
+                    position: "relative", 
+                    backgroundImage: "url('src/front/assets/img/background2.jpg')",
+                    width: "100%",
+                    height: "100%",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                 }}>
+            <div className="text-center">
                 {
-                    // check the store for a valid token, if there is a token, welcome the user otherwise, direct the user to login
-                    (store.token && store.token !== undefined && store.token !== "")
-                        ?
-                        <>
-                            <h1>This should be just a message above the submit button saying your credentials are not correct</h1>
-                        </>
-                        :
-                        <>
-                            <h1>Login: </h1>
-                            <div>
-                                <input
-                                    type='text'
+                (store.token && store.token !== undefined && store.token !== "")
+                ? 
+                <h1>You are already logged in</h1>
+                : 
+                <>
+                <div className="row mt-0 p-5">
+                    <div className="col-4"></div>
+                    <div className="col-4">
+                        <div className="card cardLogin p-3" 
+                            style={{boxShadow: "0 6px 12px rgba(52, 29, 105, 0.1)",
+                                    borderRadius: "10px"}}
+                            >
+                            <div className="card-header h2">
+                                Login
+                            </div>
+                            <div className="card-body">
+                                <div className="mb-3 mt-5">
+                                    <input
+                                    type='email'
+                                    className='form-control-lg'
                                     placeholder='email'
                                     value={email}
                                     onChange={e => setEmail(e.target.value)}
-                                />
-                            </div>
-                            <div>
-                                <input
+                                    required
+                                    />
+                                    <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+                                </div>
+                                <div className="mb-3">
+                                    <input
                                     type='password'
                                     placeholder='password'
+                                    className='form-control-lg'
                                     value={password}
                                     onChange={e => setPassword(e.target.value)}
-                                />
-                            </div>
-                            <div>
-                                <button
-                                    onClick={handleClick}
-                                >Login
-                                </button>
-                            </div>
+                                    required
+                                    />
+                                </div>
+                                <div>
+                                    <button 
+                                        className="btn btn-lg btn-primary m-4"
+                                        onClick={handleClick}>Login
+                                    </button>
+                                </div>
+                        </div>
+                        </div>
+                        <div className="col-4"></div>
+                    </div>
+                </div>  
                         </>
                 }
             </div>
+
+        </div>
+
         </>
+
+        
+    
     );
 }
 

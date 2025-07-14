@@ -14,56 +14,50 @@ export const Navbar = () => {
 	const isLoggedIn = !!store.token; // 
 
 	return (
-		<nav className="navbar navbar-light bg-light">
-			<div className="container d-flex justify-content-between align-items-center">
-				<Link to="/" className="text-decoration-none">
-					<span className="navbar-brand mb-0 h1">Logo</span>
-				</Link>
-				<Link to="/journals" className="text-decoration-none">
-				 <span className="navbar-brand mb-0 h1">Journals</span>
+		<nav className="navbar navbar-light bg-light" data-bs-theme="light">
+			<div className="container">
+				<Link to="/">
+					<span className="navbar-brand mb-0 h1">
+						<img src="src/front/assets/img/logoNavbar.png" width={250} height={90}></img>
+					</span>
 				</Link>
 				<div className="ml-auto">
-
-
-
-
-
-					<Link to="/contactus">
-						<button className="btn btn-primary">Contact Us</button>
+					<Link to="/destination" className="text-decoration-none">
+						<span className="navbar-brand mb-0 h1">Destination</span>
 					</Link>
-
+					<Link to="/journals" className="text-decoration-none">
+				 		<span className="navbar-brand mb-0 h1">Journals</span>
+					</Link>
+					<Link to="/contactus" className="text-decoration-none">
+						<span className="navbar-brand mb-0 h1">Contact Us</span>
+					</Link>
 					{isLoggedIn ? (
-						<>
-
-
-							<button className="btn btn-danger" onClick={handleLogout}>
-								Logout
-							</button>
-
-						</>
+					<>
+						<Link to="/journalpostform">
+						<button className="btn btn-primary me-3">Post your Journal</button>
+						</Link>
+						<button className="btn btn-danger" onClick={handleLogout}>
+							Logout
+						</button>
+					</>			
 					)
+					
+					 : 
+					(
+					<>
+						<Link to="/login" className="text-decoration-none">
+							<span className="navbar-brand mb-0 h1 text-primary">Login</span>
+						</Link>
+						<Link to="/signup" className="text-decoration-none">
+							<button className="btn btn-primary">Signup</button>
+						</Link>
 
-						:
-						(
-							<>
-								<Link to="/login">
-									<span className="navbar-brand mb-0 h1">Login</span>
-								</Link>
-								<Link to="/signup">
-									<button className="btn btn-primary">Signup</button>
-								</Link>
-                	<Link to="/destination">
-						<button className="btn btn-primary">Destination</button>
-					</Link>
-							</>
-						)}
-				</div>
-				<div className="ml-auto">
-					<Link to="/journalpostform">
-						<button className="btn btn-primary">Post your Journal</button>
-					</Link>
+					</>
+					)}
 				</div>
 			</div>
 		</nav >
 	);
 };
+
+

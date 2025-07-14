@@ -6,8 +6,8 @@ export const initialStore = () => {
     loggedIn: false,
     isSignUpSuccessful: false,
     wishlist: [],
-  };
-};
+  }
+}
 
 export default function storeReducer(store, action = {}) {
   switch (action.type) {

@@ -1,3 +1,4 @@
+import useGlobalReducer from "../hooks/useGlobalReducer";
 import { useState } from "react"
 import { useEffect } from "react";
 
@@ -10,9 +11,11 @@ export const ContactUs = () => {
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const { store, dispatch } = useGlobalReducer();
+    
 
     const [token, setToken] = useState("");
-    const isLoggedIn = Boolean(token);
+    const isLoggedIn = !!store.token; // 
 
     useEffect(() => {
         // Set token on component mount
@@ -35,7 +38,7 @@ export const ContactUs = () => {
                 "Content-Type": "application/json",
             };
             if (isLoggedIn) {
-                headers["Authorization"] = `Bearer ${token}`;
+                headers["Authorization"] = `${store.token}`;
             }
 
             const body = isLoggedIn ? {
@@ -66,7 +69,17 @@ export const ContactUs = () => {
     }
 
     return (
-        <div className="contact-form">
+
+        <div className="bg-img" style={{  
+                    position: "relative", 
+                    backgroundImage: "url('src/front/assets/img/background2.jpg')",
+                    width: "100%",
+                    height: "100%",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                 }}>
+        <div className="contact-form" >
             <div className="glitter-circle"></div>
             <h1>Contact Us</h1>
 
@@ -74,7 +87,7 @@ export const ContactUs = () => {
                 <p>Thank you for your patience, we will review and reach back to you in several days due to the volume!</p>
             ) : isLoggedIn ? (
                 <>
-                    <div className="form-name mt-4">
+                    <div className="form-name">
                         <label>Name:</label>
                         <input type="text" onChange={e => setName(e.target.value)} className="form-name-input" />
                     </div>
@@ -88,7 +101,7 @@ export const ContactUs = () => {
                 </>
             ) : (
                 <>
-                    <div className="form-name mt-4">
+                    <div className="form-name">
                         <label>Name:</label>
                         <input type="text" onChange={e => setName(e.target.value)} className="form-name-input" />
                     </div>
@@ -106,9 +119,7 @@ export const ContactUs = () => {
                 </>
             )}
         </div>
+     </div>
     );
-
-
-
 
 }

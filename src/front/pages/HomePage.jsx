@@ -1,14 +1,11 @@
 import useGlobalReducer from "../hooks/useGlobalReducer";
+import { WorldMap } from "./WorldMap";
 export const HomePage = () => {
 
 
     return(
         <>
-        <div className="container">
-
-			dddd
-				
-        </div>
+            <WorldMap/>
         </>
     );
 }
