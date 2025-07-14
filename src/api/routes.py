@@ -8,7 +8,6 @@ from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 
 
-
 api = Blueprint('api', __name__)
 
 
@@ -32,7 +31,6 @@ def create_journal():
     print("POST body:", data)
     print("data.title", data['title'])
 
-    
     title = data.get("title")
     content = data.get("content")
 
@@ -158,18 +156,20 @@ def post_message():
         email = data.get("message_email")
         content = data.get("content")
 
-        if not content:
+        if not content or content.strip() == "":
             return jsonify({"error": "missing content"}), 400
 
         if not current_user_id:
             if not name or not email:
-                return jsonify({"error": "missing name or email"}), 400
+                return jsonify({"error": "name and email are required for guests"}), 400
         else:
             user = User.query.get(current_user_id)
             if not user:
-                return jsonify({"error": "user not found"}), 404
+                return jsonify({"error": "User not found"}), 404
             # name = user.name
             email = user.email
+            if not name:
+                name = email.split("@")[0]
 
         new_message = Message(
             message_name=name,

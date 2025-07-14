@@ -6,6 +6,7 @@ import { useEffect } from "react";
 
 
 export const ContactUs = () => {
+
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
@@ -19,10 +20,19 @@ export const ContactUs = () => {
     useEffect(() => {
         // Set token on component mount
         setToken(localStorage.getItem("token") || "");
+
     }, []);
+
+    useEffect(() => {
+        setIsSubmitted(false);
+    }, [location.key]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!message.trim()) {
+            alert("Please enter a message");
+            return;
+        }
         try {
             const headers = {
                 "Content-Type": "application/json",
@@ -49,6 +59,7 @@ export const ContactUs = () => {
 
             const data = await response.json();
             setIsSubmitted(true);
+            // navigate("/contactus");
 
 
         } catch (error) {
