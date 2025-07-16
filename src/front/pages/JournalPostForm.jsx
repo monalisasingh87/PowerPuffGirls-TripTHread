@@ -3,7 +3,7 @@ import { createPost, uploadImage } from "../../api";
 import { useAuth } from "../hooks/useAuth";
 //import "./JournalPostForm.css";
 import useGlobalReducer from "../hooks/useGlobalReducer"
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 export const JournalPostForm = () => {
@@ -66,12 +66,22 @@ export const JournalPostForm = () => {
   };
 
   return (
-    <>
+
+    <div className="bg-img" style={{  
+                    padding: "50px",
+                    position: "relative", 
+                    backgroundImage: "url('src/front/assets/img/background2.jpg')",
+                    width: "100%",
+                    height: "100%",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                 }}>
       {!store.loggedIn ? (
         <div 
           className="alert-box alert-error"
           style={{
-            padding: "10px 15px",
+            padding: "50px 15px",
             borderRadius: 5,
             marginBottom: 15,
             fontWeight: "bold",
@@ -81,6 +91,10 @@ export const JournalPostForm = () => {
           }}
         >
           You must be logged in to view this page.
+          <br></br>
+          <Link to="/login" className="text-decoration-none">
+            <span className="navbar-brand mb-0 h1 text-primary">Login</span>
+          </Link>
         </div>
       ) : (
         <form 
@@ -92,7 +106,7 @@ export const JournalPostForm = () => {
             width: "100%",
             padding: "2rem",
             borderRadius: 16,
-            margin: "100px auto",
+            margin: "auto",
             //boxShadow: "0 10px 25px rgba(0, 0, 0, 0.1)",
             //animation: "fadeIn 0.5s ease-in",
           }}
@@ -198,24 +212,6 @@ export const JournalPostForm = () => {
             />
           </label>
 
-          <label
-            style={{
-              display: "block",
-              marginBottom: "1.25rem",
-              color: "#444",
-              fontWeight: 500,
-            }}
-          >
-            Upload Images
-            <input
-              type="file"
-              accept="image/*"
-              multiple
-              onChange={(e) => setImages([...e.target.files])}
-              style={{ marginTop: "0.5rem" }}
-            />
-          </label>
-
           {images.length > 0 && (
             <div 
             className="image-preview"
@@ -292,6 +288,6 @@ export const JournalPostForm = () => {
           </button>
         </form>
       )}
-    </>
+    </div>
   );
 };

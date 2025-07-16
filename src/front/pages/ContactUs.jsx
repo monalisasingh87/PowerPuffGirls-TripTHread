@@ -38,7 +38,7 @@ export const ContactUs = () => {
                 "Content-Type": "application/json",
             };
             if (isLoggedIn) {
-                headers["Authorization"] = `${store.token}`;
+                headers["Authorization"] = `Bearer ${store.token}`;
             }
 
             const body = isLoggedIn ? {
@@ -70,7 +70,8 @@ export const ContactUs = () => {
 
     return (
 
-        <div className="bg-img" style={{  
+        <div className="bg-img" style={{ 
+                    padding: "50px", 
                     position: "relative", 
                     backgroundImage: "url('src/front/assets/img/background2.jpg')",
                     width: "100%",
@@ -79,7 +80,7 @@ export const ContactUs = () => {
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
                  }}>
-        <div className="contact-form" >
+        <div className="contact-form pb-4" >
             <div className="glitter-circle"></div>
             <h1>Contact Us</h1>
 
@@ -95,8 +96,18 @@ export const ContactUs = () => {
                         <label>Message:</label>
                         <textarea rows="5" onChange={e => setMessage(e.target.value)} value={message} />
                     </div>
-                    <div className="form-button text-center mt-4">
-                        <button className="submit" onClick={handleSubmit}>Submit</button>
+                    <div className="form-button text-center mt-4 mb-4">
+                        <button className="submit" onClick={handleSubmit} style={{
+              width: "auto",
+              padding: "0.9rem",
+              backgroundColor: "#c99404",
+              color: "white",
+              fontSize: "1rem",
+              fontWeight: "bold",
+              border: "none",
+              borderRadius: 10,
+              transition: "background 0.3s",
+            }}>Submit</button>
                     </div>
                 </>
             ) : (
@@ -114,7 +125,7 @@ export const ContactUs = () => {
                         <textarea rows="5" onChange={e => setMessage(e.target.value)} value={message} />
                     </div>
                     <div className="form-button text-center mt-4">
-                        <button className="submit" onClick={handleSubmit}>Submit</button>
+                        <button className="submit" onClick={handleSubmit} >Submit</button>
                     </div>
                 </>
             )}

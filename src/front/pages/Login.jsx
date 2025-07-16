@@ -75,7 +75,19 @@ export const Login = () => {
                                 <div>
                                     <button 
                                         className="btn btn-lg btn-primary m-4"
-                                        onClick={handleClick}>Login
+                                        onClick={handleClick}
+                                        style={{
+                                        width: "auto",
+                                        padding: "0.9rem",
+                                        backgroundColor: "#FF6B00",
+                                        hover:"#3CA9D1",
+                                        color: "white",
+                                        fontSize: "1rem",
+                                        fontWeight: "bold",
+                                        border: "none",
+                                        borderRadius: 10,
+                                        transition: "background 0.3s",
+                                        }}>Login
                                     </button>
                                 </div>
                         </div>
