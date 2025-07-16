@@ -58,7 +58,16 @@ export const JournalPostDetail = () => {
   };
 
   return (
-    <div className="journal-detail-container">
+    <div className="journal-detail-container" style={{  
+                    padding: "50px",
+                    position: "relative", 
+                    backgroundImage: "url('src/front/assets/img/background2.jpg')",
+                    width: "100%",
+                    height: "100%",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                 }}>
       <h1 className="journal-detail-title">{post.title}</h1>
       <h6 className="journal-detail-meta">
         By {localStorage.getItem(`post-author-${id}`) || "Anonymous"} on{" "}
@@ -89,7 +98,7 @@ export const JournalPostDetail = () => {
           </button>
         </div>
       )}
-    </div>
+      </div>
   );
 };
 

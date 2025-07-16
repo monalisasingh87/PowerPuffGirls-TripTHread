@@ -37,6 +37,15 @@ export const Destination = () => {
 
 
     return (
+        <div className="bg-img" style={{  
+                    position: "relative", 
+                    backgroundImage: "url('src/front/assets/img/background2.jpg')",
+                    width: "100%",
+                    height: "100%",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                 }}>
         <div className="destination">
             <div className="search-bar-container">
 
@@ -46,7 +55,7 @@ export const Destination = () => {
             <div className="row">
                 <div className="col-2"></div>
                 <div className="locationTitleAndImg col-8">
-                    <div className="description-header d-flex justify-content-around">
+                    <div className="description-header d-flex justify-content-around mb-5">
                         <div className="title">
                             {location ? (<div className="wishlist-title"><h1>{location.title}</h1>
                                 <div className="heart-block">
@@ -77,8 +86,8 @@ export const Destination = () => {
                     </div>
                 </div>
                 <div className="col-2"></div>
+              </div>
             </div>
-
         </div>
     )
 }

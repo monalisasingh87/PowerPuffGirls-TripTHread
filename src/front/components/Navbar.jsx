@@ -22,19 +22,23 @@ export const Navbar = () => {
 					</span>
 				</Link>
 				<div className="ml-auto">
+					<Link to="/homepage" className="text-decoration-none">
+						<span className="navbar-brand mb-0 h1">Home</span>
+					</Link>
 					<Link to="/destination" className="text-decoration-none">
 						<span className="navbar-brand mb-0 h1">Destination</span>
 					</Link>
 					<Link to="/journals" className="text-decoration-none">
-				 		<span className="navbar-brand mb-0 h1">Journals</span>
+				 		<span className="navbar-brand mb-0 h1">Journal Feed</span>
 					</Link>
 					<Link to="/contactus" className="text-decoration-none">
 						<span className="navbar-brand mb-0 h1">Contact Us</span>
 					</Link>
+
 					{isLoggedIn ? (
 					<>
 						<Link to="/journalpostform">
-						<button className="btn btn-primary me-3">Post your Journal</button>
+							<button className="btn btn-primary me-3">Post your Journal</button>
 						</Link>
 						<button className="btn btn-danger" onClick={handleLogout}>
 							Logout
@@ -47,6 +51,9 @@ export const Navbar = () => {
 					<>
 						<Link to="/login" className="text-decoration-none">
 							<span className="navbar-brand mb-0 h1 text-primary">Login</span>
+						</Link>
+						<Link to="/journalpostform">
+							<button className="btn btn-primary me-3">Post your Journal</button>
 						</Link>
 						<Link to="/signup" className="text-decoration-none">
 							<button className="btn btn-primary">Signup</button>
