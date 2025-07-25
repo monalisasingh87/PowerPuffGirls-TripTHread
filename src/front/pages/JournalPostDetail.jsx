@@ -79,7 +79,7 @@ export const JournalPostDetail = () => {
           {post.images.map((img, index) => (
             <img
               key={index}
-              src={img.image_url}
+              src={`${import.meta.env.VITE_BACKEND_URL}${img.image_url}`}
               alt={`journal-img-${index}`}
               className="journal-image"
             />

@@ -238,6 +238,27 @@ export const JournalPostForm = () => {
               ))}
             </div>
           )}
+          <label
+            style={{
+              display: "block",
+              marginBottom: "1.25rem",
+              color: "#444",
+              fontWeight: 500,
+            }}
+          >
+          Upload Images
+          <input
+            type="file"
+            multiple
+            accept="image/*"
+            onChange={(e) => setImages([...e.target.files])}
+            style={{
+              display: "block",
+              marginTop: "0.5rem",
+            }}
+          />
+          </label>
+
 
           <label
             style={{

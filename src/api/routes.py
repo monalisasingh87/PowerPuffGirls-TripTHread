@@ -6,6 +6,9 @@ from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_tok
 from api.models import db, User, Post, PostImage, Message
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
+from flask import send_from_directory
+from werkzeug.utils import secure_filename
+import os
 
 
 api = Blueprint('api', __name__)
@@ -59,6 +62,9 @@ def create_journal():
 @api.route('/journals/<int:post_id>/images', methods=['POST'])
 @jwt_required()
 def upload_image(post_id):
+    print(">>> Request.files:", request.files)
+    print(">>> Request.form:", request.form)
+
     post = Post.query.get(post_id)
     if not post:
         return jsonify({"error": "Post not found"}), 404
@@ -67,13 +73,25 @@ def upload_image(post_id):
         return jsonify({"error": "No image file provided"}), 400
 
     image = request.files['image']
-    image_url = f"https://fakeimage.com/{image.filename}"
+
+    UPLOAD_FOLDER = os.path.join(os.getcwd(), "uploads")
+    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+    filename = secure_filename(image.filename)
+    image_path = os.path.join(UPLOAD_FOLDER, filename)
+    image.save(image_path)
+
+    image_url = f"/uploads/{filename}"
 
     post_image = PostImage(post_id=post.id, image_url=image_url)
     db.session.add(post_image)
     db.session.commit()
 
     return jsonify(post_image.serialize()), 201
+
+@api.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory('uploads', filename)
 
 
 @api.route('/journals/<int:post_id>', methods=['PUT'])
